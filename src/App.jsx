@@ -18,10 +18,6 @@ export const App = () => {
           {
             path: "login",
             element: <LoginPage/>
-          },
-          {
-            path: "register",
-            element: <RegisterPage/>
           }
         ]
     },
