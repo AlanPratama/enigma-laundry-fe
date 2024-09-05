@@ -1,6 +1,4 @@
-// import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
-import dummyCustomers from "./dummyCustomers";
 import {
   Button,
   Card,
@@ -16,9 +14,11 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import ModalComponent from "./components/ModalComponent";
+import CustomerApi from "../../../apis/CustomersApi";
+import { useSelector } from "react-redux";
 
-function CustomersPage() {
-  const [customers, setCustomers] = useState([]);
+function CustomerPage() {
+  const { items } = useSelector((state) => state.customers);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [modalTitle, setModaltitle] = useState("");
   const [isDeleteModal, setIsDeleteModal] = useState(false);
@@ -29,36 +29,38 @@ function CustomersPage() {
   });
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
+  const [isCreate, setIsCreate] = useState(false);
 
-  /**
-   * Kena cors
   const fetchCustomers = async () => {
-    const apiUrl = "http://localhost:8080/api/v1";
+    await CustomerApi.getCustomers();
+  };
 
-    const login = await axios.post(
-      `${apiUrl}/auth/login`,
-      {
-        username: "admin",
-        password: "password",
-      },
-      { withCredentials: true }
-    );
-    const token = login.data?.token;
-
-    if (token) {
-      const result = await axios.get(`${apiUrl}/customers`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-        withCredentials: true,
-      });
-
-      if (result) {
-        setCustomers(result);
-      }
+  const handleCreateCustomers = async (customer) => {
+    try {
+      await CustomerApi.createCustomers(customer);
+      fetchCustomers();
+    } catch (error) {
+      console.error("Error creating customer:", error);
     }
   };
-  */
+
+  const handleEditCustomers = async (customer) => {
+    try {
+      await CustomerApi.editCustomer(customer);
+      fetchCustomers();
+    } catch (error) {
+      console.error("Error editing customer:", error);
+    }
+  };
+
+  const handleDeleteCustomers = async (customer) => {
+    try {
+      await CustomerApi.deleteCustomers(customer);
+      fetchCustomers();
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
+  };
 
   const sort = (items, { column, direction }) => {
     return [...items].sort((a, b) => {
@@ -77,10 +79,10 @@ function CustomersPage() {
     setSortDescriptor({ column, direction });
   };
 
-  const sortedCustomers = sort(customers, sortDescriptor);
+  const sortedCustomers = sort(items, sortDescriptor);
   const pages = Math.ceil(sortedCustomers.length / rowsPerPage);
 
-  const items = useMemo(() => {
+  const sortedItems = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
@@ -88,8 +90,7 @@ function CustomersPage() {
   }, [page, sortedCustomers]);
 
   useEffect(() => {
-    // setCustomers(fetchCustomers());
-    setCustomers(dummyCustomers);
+    fetchCustomers();
   }, []);
 
   return (
@@ -104,6 +105,7 @@ function CustomersPage() {
                 setModaltitle("Tambah Pelanggan");
                 setIsDeleteModal(false);
                 setSelectedCustomer(null);
+                setIsCreate(true);
                 onOpen();
               }}
             >
@@ -157,7 +159,7 @@ function CustomersPage() {
                 <TableColumn>Aksi</TableColumn>
               </TableHeader>
               <TableBody emptyContent={"Tidak ada data."}>
-                {items.map((customer) => {
+                {sortedItems.map((customer) => {
                   return (
                     <TableRow key={customer.id}>
                       <TableCell>{customer.id}</TableCell>
@@ -177,12 +179,6 @@ function CustomersPage() {
                         )}
                       </TableCell>
                       <TableCell>
-                        {/* 
-                          Tombol lihat detail 
-                          <Button isIconOnly variant="light">
-                            <ion-icon name="eye-outline"></ion-icon>
-                          </Button> 
-                        */}
                         <Button
                           isIconOnly
                           variant="light"
@@ -190,6 +186,7 @@ function CustomersPage() {
                             setSelectedCustomer(customer);
                             setModaltitle("Edit Pelanggan");
                             setIsDeleteModal(false);
+                            setIsCreate(false);
                             onOpen();
                           }}
                         >
@@ -202,6 +199,7 @@ function CustomersPage() {
                             setModaltitle("Hapus Pelanggan");
                             setIsDeleteModal(true);
                             setSelectedCustomer(customer);
+                            setIsCreate(false);
                             onOpen();
                           }}
                         >
@@ -225,9 +223,13 @@ function CustomersPage() {
         title={modalTitle}
         isDeleteModal={isDeleteModal}
         customer={selectedCustomer}
+        handleCreateCustomer={handleCreateCustomers}
+        handleDeleteCustomer={handleDeleteCustomers}
+        handleEditCustomer={handleEditCustomers}
+        isCreate={isCreate}
       />
     </>
   );
 }
 
-export default CustomersPage;
+export default CustomerPage;

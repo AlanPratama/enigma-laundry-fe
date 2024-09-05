@@ -10,7 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/dashboard";
 import ProductPage from "./pages/dashboard/ProductPage";
-import CustomerPage from "./pages/dashboard/CustomerPage";
+import CustomerPage from "./pages/dashboard/customers/CustomerPage";
 
 export const App = () => {
   const setUser = () => {
