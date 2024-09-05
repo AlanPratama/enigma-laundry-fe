@@ -40,8 +40,6 @@ function BillPage() {
     }
   }
 
-  // console.log(data);
-
   return (
     <div className="flex justify-center items-start pt-12 h-screen">
       <Card className="w-11/12">
@@ -90,7 +88,10 @@ function BillPage() {
                         className="mx-1"
                         color="primary"
                         onPress={() => {
-                          alert("detail");
+                          setSelectedTransaction(transaction)
+                          setModalTitle("Detail Transaksi")
+                          setIsCreate(false)
+                          onOpen()
                         }}
                       >
                         Detail
@@ -107,6 +108,7 @@ function BillPage() {
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title={modalTitle}
+      isCreate={isCreate}
       transaction={selectedTransaction}
       handleCreateTransaction={handleCreateTransactions}
       />

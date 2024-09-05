@@ -61,6 +61,7 @@ class TransactionApi {
           items: data.data
         })
       );
+      // this.getTransactions()
     } catch (error) {
       store.dispatch(setError(error));
       throw new Error("TransactionAPI", error.message);

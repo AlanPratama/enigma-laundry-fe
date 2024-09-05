@@ -32,3 +32,4 @@ export const transactionsSlice = createSlice({
 export const { setError, setIsLoading, setTransactions, addTransactions } = transactionsSlice.actions
 
 export default transactionsSlice.reducer
+
