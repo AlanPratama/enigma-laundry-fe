@@ -12,8 +12,8 @@ export const PageLayout = ({ children }) => {
 
 export const DashboardPageLayout = () => {
 	return (
-		<div style={{ display: "flex" }}>
-			<aside>Sidebar</aside>
+		<div>
+			{/* <aside>Sidebar</aside> */}
 			<main>
 				<Outlet />
 			</main>

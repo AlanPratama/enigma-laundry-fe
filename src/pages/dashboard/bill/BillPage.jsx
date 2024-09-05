@@ -1,63 +1,76 @@
-import React from "react";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@nextui-org/react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 function BillPage() {
+  const [data, setData] = useState(null);
+  const token = "";
+  // const getDataFromAPI = async () => {
+  //   try {
+  //     const response = await axios.get("/api/v1/bills", {
+  //       headers: {
+  //         'Authorization' : `Bearer ${token}`
+  //       }
+  //     })
+  //     setData(response.data)
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.log("Error fetching data:", error);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   getDataFromAPI();
+  // }, []);
+
   return (
-    <div className="flex justify-center items-center">
-      <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Product name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Color
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Category
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Price
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">Laptop</td>
-              <td className="px-6 py-4">$2999</td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="px-6 py-4">White</td>
-              <td className="px-6 py-4">Laptop PC</td>
-              <td className="px-6 py-4">$1999</td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="px-6 py-4">Black</td>
-              <td className="px-6 py-4">Accessories</td>
-              <td className="px-6 py-4">$99</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div className="flex justify-center items-start pt-12 h-screen">
+      <Card className="w-11/12">
+        <CardHeader className="px-5 pt-8">
+          <h1 className="font-bold text-start text-2xl">Transaction Table</h1>
+        </CardHeader>
+        <CardBody>
+          <Table 
+          isStriped 
+          aria-label="Transaction Table"
+          >
+            <TableHeader>
+              <TableColumn className="bg-blue-100 text-black">Customer</TableColumn>
+              <TableColumn className="bg-green-100 text-black">User</TableColumn>
+              <TableColumn className="bg-red-100 text-black">Bill Details</TableColumn>
+              <TableColumn className="bg-yellow-100 text-black">Bill Dates</TableColumn>
+            </TableHeader>
+            <TableBody>
+              <TableRow key="1">
+                <TableCell>Dova Dogs Holder</TableCell>
+                <TableCell>Zul The Sigma</TableCell>
+                <TableCell>Test</TableCell>
+                <TableCell>Test</TableCell>
+              </TableRow>
+              <TableRow key="2">
+                <TableCell>Dova Dogs Holder</TableCell>
+                <TableCell>Zul The Sigma</TableCell>
+                <TableCell>Test</TableCell>
+                <TableCell>Test</TableCell>
+              </TableRow>
+              <TableRow key="3">
+                <TableCell>Dova Dogs Holder</TableCell>
+                <TableCell>Zul The Sigma</TableCell>
+                <TableCell>Test</TableCell>
+                <TableCell>Test</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </CardBody>
+      </Card>
     </div>
   );
 }
