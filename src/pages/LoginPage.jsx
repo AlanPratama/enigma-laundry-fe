@@ -7,7 +7,7 @@ const LoginPage = () => {
 	const navigate = useNavigate();
 	const loginHandler = async () => {
 		await AuthApi.login("employee", "password");
-		navigate("/dashboard");
+		navigate("/dashboard", { replace: true, state: { from: "/login" } });
 	};
 
 	return (

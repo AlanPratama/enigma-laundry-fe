@@ -13,7 +13,7 @@ import DashboardPage from "./pages/dashboard";
 import ProductPage from "./pages/dashboard/ProductPage";
 import CustomerPage from "./pages/dashboard/customers/CustomerPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import BillPage from "./pages/dashboard/BillPage";
+import BillPage from "./pages/dashboard/transaction/TransactionPage";
 
 export const App = () => {
   const setUser = () => {
@@ -63,15 +63,15 @@ export const App = () => {
 							element: <DashboardPage />,
 						},
 						{
-							path: "product",
+							path: "products",
 							element: <ProductPage />,
 						},
 						{
-							path: "customer",
+							path: "customers",
 							element: <CustomerPage />,
 						},
 						{
-							path: "bill",
+							path: "bills",
 							element: <BillPage />,
 						},
 					],

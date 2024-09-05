@@ -1,5 +1,8 @@
 import {
   Button,
+  Card,
+  CardBody,
+  CardHeader,
   Modal,
   ModalBody,
   ModalContent,
@@ -20,12 +23,17 @@ import { useEffect, useRef, useState } from "react";
 import {
   AddCircle,
   BagAddOutline,
+  BagHandleOutline,
   KeypadOutline,
+  PencilOutline,
   PricetagOutline,
   Search,
+  TrashBinOutline,
 } from "react-ionicons";
 import { useSelector } from "react-redux";
 import ProductApi from "../../apis/ProductsApi";
+import { toast, ToastContainer } from "react-toastify";
+import { setProducts } from "../../redux/products/productsSlice";
 
 const AddProductModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -34,6 +42,7 @@ const AddProductModal = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -47,6 +56,18 @@ const AddProductModal = () => {
 
     await ProductApi.createProduct(productData);
     cancelRef.current.click();
+
+    setValue("name", "");
+    setValue("price", "");
+    setValue("type", "");
+
+    toast.success(`Produk Berhasil Dibuat!`, {
+      position: "top-center",
+      autoClose: 4000,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    })
   };
 
   return (
@@ -148,55 +169,33 @@ const AddProductModal = () => {
 
 const ProductPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [productUpdate, setProductUpdate] = useState({});
+  const [search, setSearch] = useState("");
+  const [productChange, setProductChange] = useState({});
   const [modalType, setModalType] = useState("update");
   const { items } = useSelector((state) => state.products);
   
-  const [sortDescriptor, setSortDescriptor] = useState({
-    column: "id",
-    direction: "descending",
-  });
-
   const getProduct = async () => {
     await ProductApi.getProducts();
     setIsLoading(false);
   };
 
   const handleUpdateModal = (item) => {
-    setProductUpdate(item)
+    setProductChange(item)
     setModalType("update");
-    console.log("upda:", item);
+    console.log(item);
     
-    onOpenChange(true)
+    onOpen()
   }
   
   const handleDeleteModal = (product) => {
     setModalType("delete");
-    setProductUpdate(product)
-    onOpenChange(true)
+    setProductChange(product)
+    onOpen()
   }
 
   useEffect(() => {
     getProduct();
   }, []);
-
-  const handleSort = ({ items, sortDescriptor }) => {
-    return {
-      items: items.sort((a, b) => {
-        let first = a[sortDescriptor.column];
-        let second = b[sortDescriptor.column];
-        let cmp =
-          (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
-
-        if (sortDescriptor.direction === "descending") {
-          cmp *= -1;
-        }
-
-        return cmp;
-      }),
-    };
-  };
-
 
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -210,66 +209,123 @@ const ProductPage = () => {
   } = useForm();
 
   useEffect(() => {
-    setValue("name", productUpdate.name);
-    setValue("price", productUpdate.price);
-    setValue("type", productUpdate.type);
-  }, [productUpdate]);
+    setValue("name", productChange.name);
+    setValue("price", productChange.price);
+    setValue("type", productChange.type);
+  }, [productChange]);
 
   const onSubmit = async () => {
     if(modalType === "update") {
       const productData = {
-        id: productUpdate.id,
+        id: productChange.id,
         name: watch("name"),
         price: parseInt(watch("price")),
         type: watch("type"),
       };
+      setValue("name", "");
+      setValue("price", "");
+      setValue("type", "");
       console.log(productData);
   
       await ProductApi.updateProduct(productData);
+      toast.success("Produk Berhasil Diubah!", {
+        position: "top-center",
+        autoClose: 4000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } else {
-      await ProductApi.deleteProduct(productUpdate.id)
+      await ProductApi.deleteProduct(productChange.id)
+      toast.success("Produk Berhasil Dihapus!", {
+        position: "top-center",
+        autoClose: 4000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
     cancelRef.current.click();
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+  
+    const dayName = new Intl.DateTimeFormat("id-ID", { weekday: "long" }).format(date);
+    const day = date.getDate();
+    const monthName = new Intl.DateTimeFormat("id-ID", { month: "short" }).format(date);
+    const year = date.getFullYear();
+    const time = date.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  
+    return `${dayName}, ${day} ${monthName} ${year} (${time})`;
+  };
+
+  // const handleSearch = () => {
+  //   if (search === "") {
+  //     // getProduct();
+  //   } else {
+      
+  //     items.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
+      
+  //     console.log("asasa");
+
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   handleSearch()
+  // }, [search])
 
   return (
-    <div>
-      <div className="my-4 flex justify-between items-center">
-        <div className="">
-          <AddProductModal />
-        </div>
-        <div className="relative w-auto">
+    <div className="flex justify-center items-start pt-6 px-3 h-screen">
+      <Card className="w-full">
+      <CardHeader className="flex justify-between mt-2 px-7">
+        <h1 className="font-bold text-start text-xl">Daftar Produk</h1>
+        <div className="flex justify-center items-center gap-4">
+        {/* <div className="relative w-auto">
           <Search
             color={"#606060"}
-            className="absolute top-2.5 right-3"
+            className="absolute top-3.5 right-3"
           />
           <input
             type="text"
             placeholder="Search..."
-            className="w-full border shadow px-3 py-2 rounded-xl"
+            className="w-full border shadow px-3 py-3 rounded-xl"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
           />
+        </div> */}
+          <AddProductModal />
         </div>
-      </div>
+      </CardHeader>
+      <CardBody>
+
       <Table
         aria-label="Example table with client side sorting"
-        onSortChange={handleSort}
-        sortDescriptor={sortDescriptor}
         classNames={{
           table: "min-h-auto",
         }}
       >
         <TableHeader>
-          <TableColumn key="name" allowsSorting>
-            Name
+          <TableColumn key="name">
+            Nama
           </TableColumn>
-          <TableColumn key="price" allowsSorting>
-            Price
+          <TableColumn key="price">
+            Harga
           </TableColumn>
-          <TableColumn key="type" allowsSorting>
-            Type
+          <TableColumn key="type">
+            Tipe
           </TableColumn>
-          <TableColumn>Action</TableColumn>
+          <TableColumn key="type">
+            Dibuat Pada
+          </TableColumn>
+          <TableColumn key="type">
+            Diubah Pada
+          </TableColumn>
+          <TableColumn>Aksi</TableColumn>
         </TableHeader>
         <TableBody
           items={items}
@@ -283,6 +339,8 @@ const ProductPage = () => {
                 <TableCell>{item.name}</TableCell>
                 <TableCell>Rp {item.price.toLocaleString("id-ID")}</TableCell>
                 <TableCell>{item.type}</TableCell>
+                <TableCell>{formatDate(item.createdAt)}</TableCell>
+                <TableCell>{formatDate(item.updatedAt)}</TableCell>
                 {/* Kolom Action */}
                 <TableCell className="flex justify-start items-center gap-2">
                   <Button
@@ -291,7 +349,7 @@ const ProductPage = () => {
                     size="sm"
                     onPress={() => handleUpdateModal(item)}
                   >
-                    Edit
+                    <PencilOutline color="blue" height="15px" /> Edit
                   </Button>
                   <Button
                     variant="flat"
@@ -299,14 +357,15 @@ const ProductPage = () => {
                     size="sm"
                     onPress={() => handleDeleteModal(item)}
                   >
-                    Delete
+                    <TrashBinOutline color="red" height="15px" /> Delete
                   </Button>
                   <Button
                     variant="flat"
                     color="success"
                     size="sm"
-                    onPress={() => handleEdit(item.id)}
+                    // onPress={() => handleEdit(item.id)}
                   >
+                    <BagHandleOutline color="green" height="15px" />
                     Order
                   </Button>
                 </TableCell>
@@ -315,6 +374,8 @@ const ProductPage = () => {
           }}
         </TableBody>
       </Table>
+      </CardBody>
+      </Card>
 
       <div>
       <Modal
@@ -341,7 +402,7 @@ const ProductPage = () => {
                       <input
                         type="text"
                         {...register("name", { required: true })}
-                        defaultValue={productUpdate.name}
+                        defaultValue={productChange.name}
                         placeholder="Nama produk..."
                         className="w-full px-3 py-2 rounded-r-xl"
                       />
@@ -356,7 +417,7 @@ const ProductPage = () => {
                       />
                       <input
                         type="number"
-                        defaultValue={productUpdate.price}
+                        defaultValue={productChange.price}
                         {...register("price", { required: true, min: 0 })}
                         min={0}
                         placeholder="Harga produk..."
@@ -372,7 +433,7 @@ const ProductPage = () => {
                         // className="absolute top-2.5 left-3"
                       />
                       <input
-                        defaultValue={productUpdate.type}
+                        defaultValue={productChange.type}
                         {...register("type", { required: true })}
                         type="text"
                         placeholder="Type produk..."
@@ -385,7 +446,7 @@ const ProductPage = () => {
                   </>
                     ): (
                       <>
-                        <p>Apakah kamu yakin akan menghapus produk ini <span className="text-blue-600 font-medium">{productUpdate.name}</span>? </p>
+                        <p>Apakah kamu yakin akan menghapus produk ini <span className="text-blue-600 font-medium">{productChange.name}</span>? </p>
                       </>
                     )
                   }
@@ -409,6 +470,8 @@ const ProductPage = () => {
         </ModalContent>
       </Modal>
     </div>
+
+    <ToastContainer/>
     </div>
   );
 };

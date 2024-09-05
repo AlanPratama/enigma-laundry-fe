@@ -32,48 +32,48 @@ function Sidebar() {
           </li>
           <li>
             <Button
-              onClick={() => handleNavigate("/dashboard/product")}
+              onClick={() => handleNavigate("/dashboard/products")}
               variant="light"
               color="primary"
               className={`${
-                location.pathname == "/dashboard/product" &&
+                location.pathname == "/dashboard/products" &&
                 "bg-blue-500 text-white"
               } w-full justify-start`}
               radius="sm"
               startContent={<ion-icon name="pricetags-outline"></ion-icon>}
             >
-              <span className="ms-3 text-medium font-semibold">Product</span>
+              <span className="ms-3 text-medium font-semibold">Products</span>
             </Button>
           </li>
           <li>
             <Button
-              onClick={() => handleNavigate("/dashboard/customer")}
+              onClick={() => handleNavigate("/dashboard/customers")}
               variant="light"
               color="primary"
               className={`${
-                location.pathname == "/dashboard/customer" &&
+                location.pathname == "/dashboard/customers" &&
                 "bg-blue-500 text-white"
               } w-full justify-start`}
               radius="sm"
               startContent={<ion-icon name="people-outline"></ion-icon>}
             >
-              <span className="ms-3 text-medium font-semibold">Customer</span>
+              <span className="ms-3 text-medium font-semibold">Customers</span>
             </Button>
           </li>
           <li>
             <Button
-              onClick={() => handleNavigate("/dashboard/transaction")}
+              onClick={() => handleNavigate("/dashboard/bills")}
               variant="light"
               color="primary"
               className={`${
-                location.pathname == "/dashboard/transaction" &&
+                location.pathname == "/dashboard/bills" &&
                 "bg-blue-500 text-white"
               } w-full justify-start`}
               radius="sm"
               startContent={<ion-icon name="receipt-outline"></ion-icon>}
             >
               <span className="ms-3 text-medium font-semibold">
-                Transaction
+                Bills
               </span>
             </Button>
           </li>
