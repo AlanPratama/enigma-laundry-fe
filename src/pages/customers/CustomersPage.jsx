@@ -166,11 +166,15 @@ function CustomersPage() {
                       <TableCell>{customer.address}</TableCell>
                       <TableCell>
                         {new Date(customer.createdAt).toLocaleDateString()}{" "}
-                        {new Date(customer.createdAt).toLocaleTimeString()}
+                        {new Date(customer.createdAt).toLocaleTimeString(
+                          "en-GB"
+                        )}
                       </TableCell>
                       <TableCell>
                         {new Date(customer.updatedAt).toLocaleDateString()}{" "}
-                        {new Date(customer.updatedAt).toLocaleTimeString()}
+                        {new Date(customer.updatedAt).toLocaleTimeString(
+                          "en-GB"
+                        )}
                       </TableCell>
                       <TableCell>
                         {/* 
