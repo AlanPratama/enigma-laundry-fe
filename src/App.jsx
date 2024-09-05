@@ -3,9 +3,7 @@ import { DashboardPageLayout, PageLayout } from "./layouts/PageLayout";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import DashboardPage from "./pages/dashboard";
-import ProductPage from "./pages/dashboard/ProductPage";
-import CustomerPage from "./pages/dashboard/CustomerPage";
+import BillPage from "./pages/dashboard/bill/BillPage";
 
 export const App = () => {
 	const router = createBrowserRouter([
@@ -34,17 +32,21 @@ export const App = () => {
 			path: "/dashboard",
 			element: <DashboardPageLayout />,
 			children: [
+				// {
+				// 	path: "",
+				// 	element: <DashboardPage />,
+				// },
+				// {
+				// 	path: "product",
+				// 	element: <ProductPage />,
+				// },
+				// {
+				// 	path: "customer",
+				// 	element: <CustomerPage />,
+				// },
 				{
-					path: "",
-					element: <DashboardPage />,
-				},
-				{
-					path: "product",
-					element: <ProductPage />,
-				},
-				{
-					path: "customer",
-					element: <CustomerPage />,
+					path: "bill",
+					element: <BillPage />,
 				},
 			],
 		},
