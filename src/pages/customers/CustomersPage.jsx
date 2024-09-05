@@ -1,6 +1,5 @@
 // import axios from "axios";
-import { useEffect, useMemo } from "react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dummyCustomers from "./dummyCustomers";
 import {
   Button,
@@ -18,7 +17,7 @@ import {
 } from "@nextui-org/react";
 import ModalComponent from "./components/ModalComponent";
 
-function Customers() {
+function CustomersPage() {
   const [customers, setCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [modalTitle, setModaltitle] = useState("");
@@ -98,7 +97,7 @@ function Customers() {
       <div className="flex flex-1 justify-center m-8">
         <Card>
           <CardHeader className="flex justify-between mt-2">
-            <h1 className="text-xl font-bold p-2  ">Daftar Pelanggan</h1>
+            <h1 className="text-xl font-bold p-2">Daftar Pelanggan</h1>
             <Button
               color="primary"
               onPress={() => {
@@ -227,4 +226,4 @@ function Customers() {
   );
 }
 
-export default Customers;
+export default CustomersPage;
