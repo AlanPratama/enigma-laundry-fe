@@ -18,9 +18,11 @@ import { useForm } from "react-hook-form"
 
 
 import { useAsyncList } from "@react-stately/data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddCircle, BagAddOutline, KeypadOutline, PricetagOutline, Search } from "react-ionicons";
 import axiosInstance from "../../apis/axiosInstance";
+import ProductApi from "../../apis/ProductsApi";
+import { useSelector } from "react-redux";
 
 const productList = [
   {
@@ -145,17 +147,19 @@ const AddProductModal = () => {
 
 const ProductPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState([]);
+  const { items } = useSelector((state) => state.products);
+	console.log("itemss: ",items);
 
-  // const fetch = async () => {
-  //   const res
-  // }
+	const getProduct = async () => {
+		await ProductApi.getProducts();
+	};
+
+	useEffect(() => {
+		getProduct();
+	}, []);
 
   let list = useAsyncList({
     async load() {
-      const res = await axiosInstance.get("/products");
-      console.log(res.data);
-       
       let json = productList;
       setIsLoading(false);
 
