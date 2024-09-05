@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import ProductApi from "../../apis/ProductsApi";
 
 const ProductPage = () => {
-	const { items } = useSelector((state) => state.products);
+	const items = useSelector((state) => state.products);
 	console.log(items);
 
 	const getProduct = async () => {

@@ -7,7 +7,6 @@ class ProductApi {
 		try {
 			store.dispatch(setIsLoading(true));
 			const { data } = await axiosInstance.get("/products/");
-
 			store.dispatch(
 				setProducts({
 					items: data.data,

@@ -8,7 +8,7 @@ import store from "./redux/store";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import BillPage from "./pages/dashboard/bill/BillPage";
+import TransactionPage from "./pages/dashboard/transaction/TransactionPage"
 
 export const App = () => {
 	const setUser = () => {
@@ -61,8 +61,8 @@ export const App = () => {
 				// 	element: <CustomerPage />,
 				// },
 				{
-					path: "bill",
-					element: <BillPage />,
+					path: "transaction",
+					element: <TransactionPage />,
 				},
 			],
 		},
