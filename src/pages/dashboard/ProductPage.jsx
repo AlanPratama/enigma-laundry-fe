@@ -1,8 +1,5 @@
 import {
   Button,
-  Card,
-  CardBody,
-  CardHeader,
   Modal,
   ModalBody,
   ModalContent,
@@ -16,6 +13,9 @@ import {
   TableHeader,
   TableRow,
   useDisclosure,
+  Card,
+  CardHeader,
+  CardBody,
 } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 
@@ -30,10 +30,10 @@ import {
   Search,
   TrashBinOutline,
 } from "react-ionicons";
-import { useSelector } from "react-redux";
 import ProductApi from "../../apis/ProductsApi";
 import { toast, ToastContainer } from "react-toastify";
 import { setProducts } from "../../redux/products/productsSlice";
+import { useSelector } from "react-redux";
 
 const AddProductModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

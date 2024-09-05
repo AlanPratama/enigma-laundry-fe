@@ -110,7 +110,7 @@ function CustomerPage() {
               }}
             >
               <ion-icon name="document-text-outline"></ion-icon>
-              <span>Tambah Pelanggan</span>
+              <span className="font-semibold">Tambah Pelanggan</span>
             </Button>
           </CardHeader>
           <CardBody>

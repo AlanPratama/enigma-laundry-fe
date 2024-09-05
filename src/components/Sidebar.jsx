@@ -9,6 +9,12 @@ function Sidebar() {
   const handleNavigate = (path) => {
     navigate(path);
   };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate(0);
+  };
+
   return (
     <aside className="sm:block sticky top-0 left-0 z-40 w-64 h-screen hidden border-r-2">
       <div className="h-full overflow-y-auto bg-gray-50">
@@ -75,6 +81,19 @@ function Sidebar() {
               <span className="ms-3 text-medium font-semibold">
                 Bills
               </span>
+            </Button>
+          </li>
+          <hr />
+          <li>
+            <Button
+              onClick={() => handleLogout()}
+              variant="light"
+              color="danger"
+              className="w-full justify-start"
+              radius="sm"
+              startContent={<ion-icon name="log-out-outline"></ion-icon>}
+            >
+              <span className="ms-3 text-medium font-semibold">Logout</span>
             </Button>
           </li>
         </ul>
