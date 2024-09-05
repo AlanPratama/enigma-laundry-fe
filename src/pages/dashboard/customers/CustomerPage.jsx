@@ -96,7 +96,7 @@ function CustomerPage() {
   return (
     <>
       <div className="flex flex-1 justify-center m-8">
-        <Card>
+        <Card shadow="">
           <CardHeader className="flex justify-between mt-2">
             <h1 className="text-xl font-bold p-2">Daftar Pelanggan</h1>
             <Button
@@ -126,7 +126,7 @@ function CustomerPage() {
                     loop
                     isCompact
                     showControls
-                    showShadow
+                    // showShadow
                     size="sm"
                     color="primary"
                     variant="light"

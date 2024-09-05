@@ -62,6 +62,10 @@ export const App = () => {
           path: "customer",
           element: <CustomerPage />,
         },
+        {
+          path: "transaction",
+          element: <h1>TRANSACTION</h1>,
+        },
       ],
     },
   ]);

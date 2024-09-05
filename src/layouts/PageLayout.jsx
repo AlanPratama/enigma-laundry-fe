@@ -1,19 +1,15 @@
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
 
 export const PageLayout = ({ children }) => {
-  return (
-    <>
-      <header>HEADERR</header>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 };
 
 export const DashboardPageLayout = () => {
   return (
     <div style={{ display: "flex" }}>
-      <aside>Sidebar</aside>
+      <Sidebar />
       <main className="w-full">
         <Outlet />
       </main>
