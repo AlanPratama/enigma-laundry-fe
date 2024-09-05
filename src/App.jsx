@@ -9,19 +9,19 @@ import store from "./redux/store";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/dashboard";
-import ProductPage from "./pages/dashboard/ProductPage";
-import CustomerPage from "./pages/dashboard/CustomerPage";
+import CustomerPage from "./pages/dashboard/customers/CustomerPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BillPage from "./pages/dashboard/BillPage";
+import ProductPage from "./pages/dashboard/ProductPage";
 
 export const App = () => {
-	const [loading, setLoading] = useState(true);
 	const setUser = () => {
 		const token = localStorage.getItem("token");
 		if (token) {
 			store.dispatch(login(jwtDecode(token)));
 		}
 	};
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		setUser();
