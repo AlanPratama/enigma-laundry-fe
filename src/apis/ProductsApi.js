@@ -15,7 +15,7 @@ class ProductApi {
 				})
 			);
 		} catch (error) {
-			store.dispatch(setError(error));
+			store.dispatch(setError(error.message));
 			throw new Error("ProductApi getProducts", error.message);
 		} finally {
 			store.dispatch(setIsLoading(false));

@@ -17,7 +17,7 @@ class AuthApi {
 
 			store.dispatch(login(jwtDecode(data.data.token))); // save user detail to redux auth state
 		} catch (error) {
-			store.dispatch(setError(error));
+			store.dispatch(setError(error.message));
 			console.error(error);
 		} finally {
 			store.dispatch(setIsLoading(false));
