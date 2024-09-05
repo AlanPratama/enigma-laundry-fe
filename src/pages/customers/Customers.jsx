@@ -104,6 +104,7 @@ function Customers() {
               onPress={() => {
                 setModaltitle("Tambah Pelanggan");
                 setIsDeleteModal(false);
+                setSelectedCustomer(null);
                 onOpen();
               }}
             >
@@ -197,6 +198,7 @@ function Customers() {
                           onPress={() => {
                             setModaltitle("Hapus Pelanggan");
                             setIsDeleteModal(true);
+                            setSelectedCustomer(customer);
                             onOpen();
                           }}
                         >
