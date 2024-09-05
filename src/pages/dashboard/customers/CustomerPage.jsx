@@ -138,9 +138,9 @@ function CustomerPage() {
               }
             >
               <TableHeader>
-                <TableColumn allowsSorting key="id">
+                {/* <TableColumn allowsSorting key="id">
                   Id Pelanggan
-                </TableColumn>
+                </TableColumn> */}
                 <TableColumn allowsSorting key="name">
                   Nama
                 </TableColumn>
@@ -162,7 +162,7 @@ function CustomerPage() {
                 {sortedItems.map((customer) => {
                   return (
                     <TableRow key={customer.id}>
-                      <TableCell>{customer.id}</TableCell>
+                      {/* <TableCell>{customer.id}</TableCell> */}
                       <TableCell>{customer.name}</TableCell>
                       <TableCell>{customer.phoneNumber}</TableCell>
                       <TableCell>{customer.address}</TableCell>
