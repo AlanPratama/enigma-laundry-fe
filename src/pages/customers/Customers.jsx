@@ -157,7 +157,7 @@ function Customers() {
                 </TableColumn>
                 <TableColumn>Aksi</TableColumn>
               </TableHeader>
-              <TableBody>
+              <TableBody emptyContent={"Tidak ada data."}>
                 {items.map((customer) => {
                   return (
                     <TableRow key={customer.id}>
