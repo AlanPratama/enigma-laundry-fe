@@ -1,23 +1,17 @@
 import store from "../redux/store";
 import axiosInstance from "./axiosInstance";
-import { setError, setIsLoading, setProducts } from "../redux/products/productsSlice";
+import { addProduct, editProduct, setError, setIsLoading, setProducts } from "../redux/products/productsSlice";
 
 class ProductApi {
 	static async getProducts() {
 		try {
 			store.dispatch(setIsLoading(true));
-			const { data } = await axiosInstance.get("/products/", {
-				headers: {
-					Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzI1NTQwMjkxLCJpYXQiOjE3MjU1MzY2OTEsInVzZXJJZCI6ImRhNGFkODhiLTk5YjItNGJkZi04Y2M3LTU2M2Q0NjFkNTBlZSIsInJvbGUiOiJhZG1pbiIsInNlcnZpY2VzIjpudWxsfQ.Fzkdit4PlJAN5x7kClozSlb_5DV4eOBT7lFuhyfoMr4`
-				}
-			});
-			console.log("dataass: ", data);
+			const { data } = await axiosInstance.get("/products/");
 			
 			store.dispatch(
 				setProducts({
 					items: data.data,
-					// total: data.data.length,
-					total: 1000,
+					total: data.data.length,
 				})
 			);
 		} catch (error) {
@@ -27,6 +21,44 @@ class ProductApi {
 			store.dispatch(setIsLoading(false));
 		}
 	}
+
+	static async createProduct(productData) {
+		try {
+			store.dispatch(setIsLoading(true));
+			const res = await axiosInstance.post("/products/", {...productData})
+			store.dispatch(addProduct(res.data.data))
+		} catch (error) {
+			store.dispatch(setError(error));
+			throw new Error("ProductApi createProduct", error.message);
+		} finally {
+			store.dispatch(setIsLoading(false));
+		}
+	}
+
+	static async updateProduct(productData) {
+		try {
+			store.dispatch(setIsLoading(true));
+			const res = await axiosInstance.put(`/products/`, {...productData})
+			store.dispatch(editProduct(res.data.data))
+		} catch (error) {
+			store.dispatch(setError(error));
+		} finally {
+			store.dispatch(setIsLoading(false));
+		}
+	}
+
+	static async deleteProduct(productId) {
+		try {
+			store.dispatch(setIsLoading(true));
+			await axiosInstance.delete(`/products/${productId}`)
+			this.getProducts()
+		} catch (error) {
+			store.dispatch(setError(error));
+		} finally {
+			store.dispatch(setIsLoading(false));
+		}
+	}
+
 }
 
 export default ProductApi;

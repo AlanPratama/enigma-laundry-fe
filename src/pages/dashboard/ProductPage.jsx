@@ -14,49 +14,41 @@ import {
   TableRow,
   useDisclosure,
 } from "@nextui-org/react";
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 
-
-import { useAsyncList } from "@react-stately/data";
-import { useEffect, useState } from "react";
-import { AddCircle, BagAddOutline, KeypadOutline, PricetagOutline, Search } from "react-ionicons";
-import axiosInstance from "../../apis/axiosInstance";
-import ProductApi from "../../apis/ProductsApi";
+import { useEffect, useRef, useState } from "react";
+import {
+  AddCircle,
+  BagAddOutline,
+  KeypadOutline,
+  PricetagOutline,
+  Search,
+} from "react-ionicons";
 import { useSelector } from "react-redux";
-
-const productList = [
-  {
-    id: "58e0c367-af5e-4b9e-ae56-75f3b53a0096",
-    name: "Cuci + Setrika",
-    price: 11000,
-    type: "Kg",
-    createdAt: "2024-09-05T16:16:01.943311054+07:00",
-    updatedAt: "2024-09-05T16:16:01.943311098+07:00",
-  },
-  {
-    id: "e2f7be9c-0b63-4064-bf53-6830b40fd63b",
-    name: "Cuci",
-    price: 7000,
-    type: "Kg",
-    createdAt: "2024-09-05T16:16:01.94331114+07:00",
-    updatedAt: "2024-09-05T16:16:01.943311175+07:00",
-  },
-];
+import ProductApi from "../../apis/ProductsApi";
 
 const AddProductModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+  const cancelRef = useRef();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
   const onSubmit = async () => {
-    alert("Hi!");
-  }
-  
+    const productData = {
+      name: watch("name"),
+      price: parseInt(watch("price")),
+      type: watch("type"),
+    };
+    console.log(productData);
+
+    await ProductApi.createProduct(productData);
+    cancelRef.current.click();
+  };
+
   return (
     <>
       <Button
@@ -78,64 +70,72 @@ const AddProductModal = () => {
           {(onClose) => (
             <ModalContent>
               <form onSubmit={handleSubmit(onSubmit)}>
-              <ModalHeader className="flex flex-col gap-1">
-                Tambah Produk
-              </ModalHeader>
-              <ModalBody>
-                <>
-                  <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
-                    <BagAddOutline
-                      color={"#606060"}
-                      // className="absolute top-2.5 left-3"
-                      onClick={() => alert("Hi!")}
-                    />
-                    <input
-                      {...register("name", { required: true })}
-                      type="text"
-                      placeholder="Nama produk..."
-                      className="w-full px-3 py-2 rounded-r-xl"
-                    />
-                  </div>
-                  <span className="text-red-500 text-sm">{errors.name && "Nama harus diisi"}</span>
-                  <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
-                    <PricetagOutline
-                      color={"#606060"}
-                      // className="absolute top-2.5 left-3"
-                      onClick={() => alert("Hi!")}
-                    />
-                    <input
-                      {...register("price", { required: true, min: 0 })}
-                      type="number"
-                      min={0}
-                      placeholder="Harga produk..."
-                      className="w-full px-3 py-2 rounded-r-xl"
-                    />
-                  </div>
-                  <span className="text-red-500 text-sm">{errors.price && "Harga harus diisi"}</span>
-                  <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
-                    <KeypadOutline
-                      color={"#606060"}
-                      // className="absolute top-2.5 left-3"
-                      onClick={() => alert("Hi!")}
-                    />
-                    <input
-                      {...register("type", { required: true })}
-                      type="text"
-                      placeholder="Type produk..."
-                      className="w-full px-3 py-2 rounded-r-xl"
-                    />
-                  </div>
-                  <span className="text-red-500 text-sm">{errors.type && "Tipe harus diisi"}</span>
-                </>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" type="submit">
-                  Submit
-                </Button>
-              </ModalFooter>
+                <ModalHeader className="flex flex-col gap-1">
+                  Tambah Produk
+                </ModalHeader>
+                <ModalBody>
+                  <>
+                    <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
+                      <BagAddOutline
+                        color={"#606060"}
+                        // className="absolute top-2.5 left-3"
+                      />
+                      <input
+                        {...register("name", { required: true })}
+                        type="text"
+                        placeholder="Nama produk..."
+                        className="w-full px-3 py-2 rounded-r-xl"
+                      />
+                    </div>
+                    <span className="text-red-500 text-sm">
+                      {errors.name && "Nama harus diisi"}
+                    </span>
+                    <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
+                      <PricetagOutline
+                        color={"#606060"}
+                        // className="absolute top-2.5 left-3"
+                      />
+                      <input
+                        {...register("price", { required: true, min: 0 })}
+                        type="number"
+                        min={0}
+                        placeholder="Harga produk..."
+                        className="w-full px-3 py-2 rounded-r-xl"
+                      />
+                    </div>
+                    <span className="text-red-500 text-sm">
+                      {errors.price && "Harga harus diisi"}
+                    </span>
+                    <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
+                      <KeypadOutline
+                        color={"#606060"}
+                        // className="absolute top-2.5 left-3"
+                      />
+                      <input
+                        {...register("type", { required: true })}
+                        type="text"
+                        placeholder="Type produk..."
+                        className="w-full px-3 py-2 rounded-r-xl"
+                      />
+                    </div>
+                    <span className="text-red-500 text-sm">
+                      {errors.type && "Tipe harus diisi"}
+                    </span>
+                  </>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    color="danger"
+                    ref={cancelRef}
+                    variant="light"
+                    onPress={onClose}
+                  >
+                    Close
+                  </Button>
+                  <Button color="primary" type="submit">
+                    Submit
+                  </Button>
+                </ModalFooter>
               </form>
             </ModalContent>
           )}
@@ -145,45 +145,93 @@ const AddProductModal = () => {
   );
 };
 
+
 const ProductPage = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [productUpdate, setProductUpdate] = useState({});
+  const [modalType, setModalType] = useState("update");
   const { items } = useSelector((state) => state.products);
-	console.log("itemss: ",items);
-
-	const getProduct = async () => {
-		await ProductApi.getProducts();
-	};
-
-	useEffect(() => {
-		getProduct();
-	}, []);
-
-  let list = useAsyncList({
-    async load() {
-      let json = productList;
-      setIsLoading(false);
-
-      return {
-        items: json,
-      };
-    },
-    async sort({ items, sortDescriptor }) {
-      return {
-        items: items.sort((a, b) => {
-          let first = a[sortDescriptor.column];
-          let second = b[sortDescriptor.column];
-          let cmp =
-            (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
-
-          if (sortDescriptor.direction === "descending") {
-            cmp *= -1;
-          }
-
-          return cmp;
-        }),
-      };
-    },
+  
+  const [sortDescriptor, setSortDescriptor] = useState({
+    column: "id",
+    direction: "descending",
   });
+
+  const getProduct = async () => {
+    await ProductApi.getProducts();
+    setIsLoading(false);
+  };
+
+  const handleUpdateModal = (item) => {
+    setProductUpdate(item)
+    setModalType("update");
+    console.log("upda:", item);
+    
+    onOpenChange(true)
+  }
+  
+  const handleDeleteModal = (product) => {
+    setModalType("delete");
+    setProductUpdate(product)
+    onOpenChange(true)
+  }
+
+  useEffect(() => {
+    getProduct();
+  }, []);
+
+  const handleSort = ({ items, sortDescriptor }) => {
+    return {
+      items: items.sort((a, b) => {
+        let first = a[sortDescriptor.column];
+        let second = b[sortDescriptor.column];
+        let cmp =
+          (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
+
+        if (sortDescriptor.direction === "descending") {
+          cmp *= -1;
+        }
+
+        return cmp;
+      }),
+    };
+  };
+
+
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const cancelRef = useRef();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    setValue("name", productUpdate.name);
+    setValue("price", productUpdate.price);
+    setValue("type", productUpdate.type);
+  }, [productUpdate]);
+
+  const onSubmit = async () => {
+    if(modalType === "update") {
+      const productData = {
+        id: productUpdate.id,
+        name: watch("name"),
+        price: parseInt(watch("price")),
+        type: watch("type"),
+      };
+      console.log(productData);
+  
+      await ProductApi.updateProduct(productData);
+    } else {
+      await ProductApi.deleteProduct(productUpdate.id)
+    }
+    cancelRef.current.click();
+  };
+
 
   return (
     <div>
@@ -195,7 +243,6 @@ const ProductPage = () => {
           <Search
             color={"#606060"}
             className="absolute top-2.5 right-3"
-            onClick={() => alert("Hi!")}
           />
           <input
             type="text"
@@ -206,8 +253,8 @@ const ProductPage = () => {
       </div>
       <Table
         aria-label="Example table with client side sorting"
-        sortDescriptor={list.sortDescriptor}
-        onSortChange={list.sort}
+        onSortChange={handleSort}
+        sortDescriptor={sortDescriptor}
         classNames={{
           table: "min-h-auto",
         }}
@@ -225,7 +272,7 @@ const ProductPage = () => {
           <TableColumn>Action</TableColumn>
         </TableHeader>
         <TableBody
-          items={list.items}
+          items={items}
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
         >
@@ -242,7 +289,7 @@ const ProductPage = () => {
                     variant="flat"
                     color="primary"
                     size="sm"
-                    onPress={() => handleEdit(item.id)}
+                    onPress={() => handleUpdateModal(item)}
                   >
                     Edit
                   </Button>
@@ -250,7 +297,7 @@ const ProductPage = () => {
                     variant="flat"
                     color="danger"
                     size="sm"
-                    onPress={() => handleEdit(item.id)}
+                    onPress={() => handleDeleteModal(item)}
                   >
                     Delete
                   </Button>
@@ -268,6 +315,100 @@ const ProductPage = () => {
           }}
         </TableBody>
       </Table>
+
+      <div>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        isDismissable={false}
+        isKeyboardDismissDisabled={true}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <ModalContent>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <ModalHeader className="flex flex-col gap-1">
+                  {modalType === "update" ? "Edit" : "Hapus"} Produk
+                </ModalHeader>
+                <ModalBody>
+                  {
+                    modalType === "update" ? (
+                      <>
+                    <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
+                      <BagAddOutline
+                        color={"#606060"}
+                      />
+                      <input
+                        type="text"
+                        {...register("name", { required: true })}
+                        defaultValue={productUpdate.name}
+                        placeholder="Nama produk..."
+                        className="w-full px-3 py-2 rounded-r-xl"
+                      />
+                    </div>
+                    <span className="text-red-500 text-sm">
+                      {errors.name && "Nama harus diisi"}
+                    </span>
+                    <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
+                      <PricetagOutline
+                        color={"#606060"}
+                        // className="absolute top-2.5 left-3"
+                      />
+                      <input
+                        type="number"
+                        defaultValue={productUpdate.price}
+                        {...register("price", { required: true, min: 0 })}
+                        min={0}
+                        placeholder="Harga produk..."
+                        className="w-full px-3 py-2 rounded-r-xl"
+                      />
+                    </div>
+                    <span className="text-red-500 text-sm">
+                      {errors.price && "Harga harus diisi"}
+                    </span>
+                    <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
+                      <KeypadOutline
+                        color={"#606060"}
+                        // className="absolute top-2.5 left-3"
+                      />
+                      <input
+                        defaultValue={productUpdate.type}
+                        {...register("type", { required: true })}
+                        type="text"
+                        placeholder="Type produk..."
+                        className="w-full px-3 py-2 rounded-r-xl"
+                      />
+                    </div>
+                    <span className="text-red-500 text-sm">
+                      {errors.type && "Tipe harus diisi"}
+                    </span>
+                  </>
+                    ): (
+                      <>
+                        <p>Apakah kamu yakin akan menghapus produk ini <span className="text-blue-600 font-medium">{productUpdate.name}</span>? </p>
+                      </>
+                    )
+                  }
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    color="danger"
+                    ref={cancelRef}
+                    variant="light"
+                    onPress={onClose}
+                  >
+                    Close
+                  </Button>
+                  <Button color="primary" type="submit">
+                    Submit
+                  </Button>
+                </ModalFooter>
+              </form>
+            </ModalContent>
+          )}
+        </ModalContent>
+      </Modal>
+    </div>
     </div>
   );
 };
