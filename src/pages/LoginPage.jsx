@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff } from "react-ionicons";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import AuthApi from "../apis/AuthApi";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -23,12 +23,12 @@ const LoginPage = () => {
 	}, []);
 
 	const onSubmit = async (data) => {
-		try {
-			await AuthApi.login(data.username, data.password);
-			navigate("/dashboard");
-		} catch (error) {
-			console.log("LoginPage Error: ", error.message);
-		}
+		await toast.promise(AuthApi.login(data.username, data.password), {
+			pending: "Login...",
+			success: "Login sucessfull 👌",
+			error: "Login failed 🤯",
+		});
+		navigate("/dashboard");
 	};
 
 	return (
@@ -89,7 +89,7 @@ const LoginPage = () => {
 												{...register("password", { required: true })}
 											/>
 											<button type='button' onClick={() => setShowPassword(!showPassword)} className='absolute top-3.5 right-3.5'>
-												{showPassword ? <EyeOff color='#505050' /> : <Eye color='#505050' />}
+												{showPassword ? <ion-icon name='eye' /> : <ion-icon name='eye-off' />}
 											</button>
 										</div>
 										{errors.password && <span className='text-red-500 font-medium'>Password required</span>}
