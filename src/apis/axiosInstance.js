@@ -1,8 +1,6 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-	baseURL: "/connect",
-	timeout: 5000,
   baseURL: "/connect",
   timeout: 5000,
 });

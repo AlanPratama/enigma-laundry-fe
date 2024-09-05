@@ -12,7 +12,6 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/dashboard";
 import ProductPage from "./pages/dashboard/ProductPage";
 import CustomerPage from "./pages/dashboard/customers/CustomerPage";
-import CustomerPage from "./pages/dashboard/CustomerPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BillPage from "./pages/dashboard/BillPage";
 
