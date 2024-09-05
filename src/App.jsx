@@ -11,8 +11,8 @@ import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/dashboard";
 import CustomerPage from "./pages/dashboard/customers/CustomerPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import BillPage from "./pages/dashboard/BillPage";
 import ProductPage from "./pages/dashboard/ProductPage";
+import TransactionPage from "./pages/dashboard/TransactionPage";
 
 export const App = () => {
 	const setUser = () => {
@@ -66,8 +66,8 @@ export const App = () => {
 							element: <CustomerPage />,
 						},
 						{
-							path: "bill",
-							element: <BillPage />,
+							path: "transaction",
+							element: <TransactionPage />,
 						},
 					],
 				},
