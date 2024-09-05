@@ -11,18 +11,19 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/dashboard";
 import ProductPage from "./pages/dashboard/ProductPage";
+import CustomerPage from "./pages/dashboard/customers/CustomerPage";
 import CustomerPage from "./pages/dashboard/CustomerPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BillPage from "./pages/dashboard/BillPage";
 
 export const App = () => {
+  const setUser = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      store.dispatch(login(jwtDecode(token)));
+    }
+  };
 	const [loading, setLoading] = useState(true);
-	const setUser = () => {
-		const token = localStorage.getItem("token");
-		if (token) {
-			store.dispatch(login(jwtDecode(token)));
-		}
-	};
 
 	useEffect(() => {
 		setUser();
@@ -88,5 +89,5 @@ export const App = () => {
 		);
 	}
 
-	return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 };
