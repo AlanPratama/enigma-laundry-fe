@@ -50,7 +50,7 @@ function Sidebar() {
               isBordered
               color="primary"
             />
-            <div className="flex flex-col">
+            <div className="flex flex-col items-start">
               <p className="text-center font-semibold">{user.iss}</p>
               <p className="text-center font-semibold">{user.role}</p>
             </div>

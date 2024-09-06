@@ -38,6 +38,8 @@ const ProductPage = () => {
   const [productChange, setProductChange] = useState({});
   const [modalType, setModalType] = useState("update");
   const { items } = useSelector((state) => state.products);
+  const { user } = useSelector((state) => state.auth);
+
 
   const getProduct = async () => {
     await ProductApi.getProducts();
@@ -87,15 +89,9 @@ const ProductPage = () => {
   }, [productChange, setValue]);
 
   const onSubmit = async () => {
+    try {
     if (modalType === "delete") {
       await ProductApi.deleteProduct(productChange.id);
-      toast.success("Produk Berhasil Dihapus!", {
-        position: "top-center",
-        autoClose: 4000,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
     } else {
       const productData = {
         id: productChange.id,
@@ -110,21 +106,11 @@ const ProductPage = () => {
 
       if (modalType === "create") await ProductApi.createProduct(productData);
       else await ProductApi.updateProduct(productData);
-
-      const message =
-        modalType === "create"
-          ? "Produk Berhasil Ditambahkan!"
-          : "Produk Berhasil Diubah!";
-
-      toast.success(message, {
-        position: "top-center",
-        autoClose: 4000,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
     }
     cancelRef.current.click();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const formatDate = (dateString) => {
@@ -166,15 +152,19 @@ const ProductPage = () => {
           />
         </div> */}
             {/* <AddProductModal /> */}
-            <Button
-              onPress={handleCreateModal}
-              color="primary"
-              variant="solid"
-              size="md"
-              className="rounded-xl font-semibold"
-            >
-              <AddCircle color={"#fff"} /> Tambah Product
-            </Button>
+            {
+              user.role === "admin" && (
+                <Button
+                  onPress={handleCreateModal}
+                  color="primary"
+                  variant="solid"
+                  size="md"
+                  className="rounded-xl font-semibold"
+                >
+                  <AddCircle color={"#fff"} /> Tambah Product
+                </Button>
+              )
+            }
           </div>
         </CardHeader>
         <CardBody>
@@ -226,7 +216,7 @@ const ProductPage = () => {
                       >
                         <TrashBinOutline color="red" height="15px" /> Delete
                       </Button>
-                      <Button
+                      {/* <Button
                         variant="flat"
                         color="success"
                         size="sm"
@@ -234,7 +224,7 @@ const ProductPage = () => {
                       >
                         <BagHandleOutline color="green" height="15px" />
                         Order
-                      </Button>
+                      </Button> */}
                     </TableCell>
                   </TableRow>
                 );
