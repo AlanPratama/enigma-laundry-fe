@@ -24,7 +24,7 @@ export const transactionsSlice = createSlice({
       state.isLoading = action.payload
     },
     setError(state, action) {
-      state.error = action.payload
+      state.error = action.payload.message
     }
   }
 })
