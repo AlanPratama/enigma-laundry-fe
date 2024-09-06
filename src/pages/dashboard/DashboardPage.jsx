@@ -10,12 +10,7 @@ const DashboardPage = () => {
   const [totalCustomers] = useState(120);
   const [totalTransactions] = useState(200);
   const [revenue] = useState(10000); // In currency
-  const [weeklyRevenue] = useState(3000); // Weekly revenue
-  const [feedbacks] = useState([
-    { name: 'Customer A', feedback: 'Great service!' },
-    { name: 'Customer B', feedback: 'Fast and reliable.' }
-  ]);
-  
+
   const [recentProducts] = useState([
     { name: 'Product A', price: '$25' },
     { name: 'Product B', price: '$30' },
@@ -35,38 +30,22 @@ const DashboardPage = () => {
 
       {/* Summary section */}
       <div className="summary-cards">
-        <div className="summary-card orange-gradient">
+        <div className="summary-card product-card">
           <h3>Total Products</h3>
           <p>{totalProducts}</p>
         </div>
-        <div className="summary-card blue-gradient">
+        <div className="summary-card customer-card">
           <h3>Total Customers</h3>
           <p>{totalCustomers}</p>
         </div>
-        <div className="summary-card blue-solid">
+        <div className="summary-card transaction-card">
           <h3>Total Transactions</h3>
           <p>{totalTransactions}</p>
         </div>
-        <div className="summary-card orange-solid">
+        <div className="summary-card revenue-card">
           <h3>Total Revenue</h3>
           <p>${revenue}</p>
         </div>
-      </div>
-
-      {/* Weekly Revenue */}
-      <div className="weekly-revenue">
-        <h3>Weekly Revenue</h3>
-        <p>${weeklyRevenue}</p>
-      </div>
-
-      {/* Recent Feedback */}
-      <div className="recent-feedback">
-        <h3>Recent Feedbacks</h3>
-        <ul>
-          {feedbacks.map((feedback, index) => (
-            <li key={index}>{feedback.name}: {feedback.feedback}</li>
-          ))}
-        </ul>
       </div>
 
       {/* Recent section */}

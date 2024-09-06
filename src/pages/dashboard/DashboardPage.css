@@ -1,102 +1,119 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-
 .dashboard-container {
   padding: 20px;
-  font-family: 'Montserrat', sans-serif;
-  background-color: #f7f7f7;
 }
 
 .dashboard-title {
-  font-size: 2.5rem;
+  font-family: 'Montserrat', sans-serif;
   color: #212519;
   text-align: center;
   margin-bottom: 20px;
 }
 
 .dashboard-subtitle {
-  font-size: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
   color: #6d6f72;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .summary-cards {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 30px;
+  justify-content: space-between;
+  margin-bottom: 40px;
 }
 
 .summary-card {
-  background: white;
+  width: 22%;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  width: 22%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
-.summary-card h3 {
-  color: #212519;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+/* Specific Card Styles */
+
+/* Product Card */
+.product-card {
+  background-color: #ff8946;
 }
 
-.summary-card p {
-  font-size: 1.5rem;
-  color: #6d6f72;
+.product-card h3, .transaction-card p {
+  color: #fff;
 }
 
-.orange-gradient {
-  background: linear-gradient(135deg, #ff8946, #ffd4bc);
+.product-card:hover p {
+  color: #233d90; /* Hanya teks nilai yang berubah */
 }
 
-.blue-gradient {
-  background: linear-gradient(135deg, #192b66, #4f64a6, #6d7db5);
-}
-
-.orange-solid {
-  background-color: #ff6b18;
-  color: white;
-}
-
-.blue-solid {
+/* Customer Card */
+.customer-card {
   background-color: #233d90;
-  color: white;
 }
 
+.customer-card h3, .customer-card p {
+  color: #fff;
+}
+
+.customer-card:hover p {
+  color: #ff8946; /* Hanya teks nilai yang berubah */
+}
+
+/* Transaction Card */
+.transaction-card {
+  background-color: #ff8946;
+}
+
+.transaction-card h3, .transaction-card p {
+  color: #fff;
+}
+
+.transaction-card:hover p {
+  color: #233d90; /* Hanya teks nilai yang berubah */
+}
+
+/* Revenue Card */
+.revenue-card {
+  background-color: #233d90;
+}
+
+.revenue-card h3, .revenue-card p {
+  color: #fff;
+}
+
+.revenue-card:hover p {
+  color: #ff8946; /* Hanya teks nilai yang berubah */
+}
+
+/* Recent Section */
 .recent-section {
   display: flex;
-  justify-content: space-around;
-  margin-top: 30px;
+  justify-content: space-between;
 }
 
 .recent-box {
-  background: white;
+  width: 48%;
   padding: 20px;
+  background-color: #f7f7f7;
   border-radius: 8px;
-  width: 45%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.recent-box h3 {
+h3 {
+  font-family: 'Montserrat', sans-serif;
   color: #212519;
-  font-size: 1.5rem;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
-.recent-box ul {
+ul {
   list-style: none;
   padding: 0;
 }
 
-.recent-box li {
-  font-size: 1.2rem;
+li {
+  font-family: 'Montserrat', sans-serif;
   color: #6d6f72;
-  margin-bottom: 10px;
-}
-
-.summary-card:hover {
-  background-color: #233d90;
-  color: white;
+  margin-bottom: 8px;
 }
