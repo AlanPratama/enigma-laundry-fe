@@ -112,6 +112,7 @@ function ModalComponent({
                     onChange={handleInputChange}
                     isInvalid={!!errors.phoneNumber}
                     errorMessage={errors.phoneNumber}
+                    data-testid="customer-modal-phone-input"
                   />
                   <Input
                     isRequired
@@ -145,6 +146,7 @@ function ModalComponent({
                     handleDelete();
                   }
                 }}
+                data-testid="customer-modal-submit"
               >
                 {!isDeleteModal ? "Simpan" : "Hapus"}
               </Button>

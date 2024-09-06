@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "/connect",
+  baseURL: "/api/v1",
   timeout: 5000,
 });
 

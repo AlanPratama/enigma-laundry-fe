@@ -23,11 +23,21 @@ const LoginPage = () => {
   }, [isAuthenticated, navigate]);
 
   const onSubmit = async (data) => {
-    await toast.promise(AuthApi.login(data.username, data.password), {
-      pending: "Login...",
-      success: "Login sucessfull 👌",
-      error: "Login failed 🤯",
-    });
+    // await toast.promise(AuthApi.login(data.username, data.password), {
+    //   pending: "Login...",
+    //   success: "Login sucessfull 👌",
+    //   error: "Login failed 🤯",
+    // });
+
+    try {
+      await AuthApi.login(data.username, data.password);
+      toast.success("Login Berhasil!");
+    } catch (error) {
+      console.log(error.message);
+
+      toast.error("Login Failed!");
+    }
+
     navigate("/");
   };
 
@@ -66,7 +76,7 @@ const LoginPage = () => {
             <div className="w-full max-w-xl xl:px-8 xl:w-5/12">
               <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                  Login to your account
+                  <span data-testid="login-title">Login</span> to your account
                 </h3>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-1 sm:mb-4">
@@ -112,7 +122,6 @@ const LoginPage = () => {
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute top-3.5 right-3.5"
-                        data-testid="login-button"
                       >
                         {showPassword ? (
                           <ion-icon name="eye" />
@@ -131,6 +140,7 @@ const LoginPage = () => {
                     <button
                       type="submit"
                       className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-indigo-700 hover:bg-indigo-800 focus:shadow-outline focus:outline-none"
+                      data-testid="login-button"
                     >
                       Log In
                     </button>
