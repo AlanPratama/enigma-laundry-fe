@@ -150,7 +150,7 @@ function CustomerPage() {
                 onOpen();
               }}
             >
-              <ion-icon name="document-text-outline"></ion-icon>
+              <ion-icon name="add-circle" size="small"></ion-icon>
               <span className="font-semibold">Tambah Pelanggan</span>
             </Button>
           </CardHeader>
@@ -207,8 +207,8 @@ function CustomerPage() {
                       <TableCell>{customer.name}</TableCell>
                       <TableCell>{customer.phoneNumber}</TableCell>
                       <TableCell>{customer.address}</TableCell>
-                      <TableCell>{formatDate(customer.createdAt)}</TableCell>
-                      <TableCell>{formatDate(customer.updatedAt)}</TableCell>
+                      <TableCell>{formatDate(customer?.createdAt)}</TableCell>
+                      <TableCell>{formatDate(customer?.updatedAt)}</TableCell>
                       <TableCell className="space-x-2">
                         <Button
                           variant="flat"
@@ -222,7 +222,7 @@ function CustomerPage() {
                             onOpen();
                           }}
                         >
-                          <ion-icon name="pencil-outline"></ion-icon>
+                          <ion-icon name="pencil" size="small"></ion-icon>
                           Edit
                         </Button>
                         <Button
@@ -239,7 +239,8 @@ function CustomerPage() {
                         >
                           <ion-icon
                             style={{ color: "red" }}
-                            name="trash-outline"
+                            name="trash"
+                            size="small"
                           ></ion-icon>
                           Delete
                         </Button>
