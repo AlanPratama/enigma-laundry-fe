@@ -39,7 +39,7 @@ function CustomerPage() {
   const handleCreateCustomers = async (customer) => {
     try {
       await CustomerApi.createCustomers(customer);
-      toast.success("Produk Berhasil Dibuat!", {
+      toast.success("Pelanggan Berhasil Dibuat!", {
         position: "top-center",
         autoClose: 4000,
         closeOnClick: true,
