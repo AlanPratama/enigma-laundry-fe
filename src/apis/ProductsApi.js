@@ -4,7 +4,7 @@ import { addProduct, editProduct, setError, setIsLoading, setProducts } from "..
 import { toast } from "react-toastify";
 
 class ProductApi {
-	static async getProducts(from) {
+	static async getProducts() {
 		try {
 			store.dispatch(setIsLoading(true));
 			const { data } = await axiosInstance.get("/products/");
@@ -15,15 +15,6 @@ class ProductApi {
 					total: data.data.length,
 				})
 			);
-			if(from !== "fromDelete") {
-				toast.success("Produk Berhasil Ditampilkan!", {
-					position: "top-center",
-					autoClose: 2000,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-				  });
-			} 
 		} catch (error) {
 			store.dispatch(setError(error.message));
 			toast.error("Produk Gagal Ditampilkan!", {
@@ -97,7 +88,6 @@ class ProductApi {
 		try {
 			store.dispatch(setIsLoading(true));
 			await axiosInstance.delete(`/products/${productId}`)
-			this.getProducts("fromDelete");
 			toast.success("Produk Berhasil Dihapus!", {
 				position: "top-center",
 				autoClose: 2500,
