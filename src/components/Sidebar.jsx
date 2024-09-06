@@ -41,7 +41,7 @@ function Sidebar() {
       >
         <div className="h-full overflow-y-auto">
           <button onClick={() => handleNavigate("/")}>
-            <img className="mx-auto w-3/4" src={logo} />
+            <img className="mx-auto w-1/2" src={logo} />
           </button>
           <div className="w-3/4 bg-blue-600 lg:pr-4 rounded-full text-white mx-auto justify-center flex flex-row lg:space-x-2">
             <Avatar
@@ -120,19 +120,20 @@ function Sidebar() {
                 <span className="ms-3 text-medium font-semibold">Bills</span>
               </Button>
             </li>
-            <hr />
-            <li>
-              <Button
-                onClick={() => handleLogout()}
-                variant="light"
-                color="danger"
-                className="w-full justify-start"
-                radius="sm"
-                startContent={<ion-icon name="log-out-outline"></ion-icon>}
-              >
-                <span className="ms-3 text-medium font-semibold">Logout</span>
-              </Button>
-            </li>
+            <div className="absolute bottom-0">
+              <li className="sm:w-40 w-52 mx-auto py-4">
+                <Button
+                  onClick={() => handleLogout()}
+                  variant="light"
+                  color="danger"
+                  className="w-full justify-start"
+                  radius="sm"
+                  startContent={<ion-icon name="log-out-outline"></ion-icon>}
+                >
+                  <span className="ms-3 text-medium font-semibold">Logout</span>
+                </Button>
+              </li>
+            </div>
           </ul>
         </div>
       </aside>
