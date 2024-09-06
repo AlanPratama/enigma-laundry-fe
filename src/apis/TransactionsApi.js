@@ -14,7 +14,7 @@ class TransactionApi {
       const { data } = await axiosInstance.get("/bills/", {
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzI1NjA3OTc0LCJpYXQiOjE3MjU2MDQzNzQsInVzZXJJZCI6IjI3YjZlZjliLWNlYWItNDcwYS05YTVmLWQ2YzlhMWU5ZDhhOSIsInJvbGUiOiJlbXBsb3llZSIsInNlcnZpY2VzIjpudWxsfQ.lNIyfxCsiVrIdPrCtmK4FE_fbV90WOvgUk-_U0hHjB4",
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzI1NjA4NjA3LCJpYXQiOjE3MjU2MDUwMDcsInVzZXJJZCI6ImRhNGFkODhiLTk5YjItNGJkZi04Y2M3LTU2M2Q0NjFkNTBlZSIsInJvbGUiOiJhZG1pbiIsInNlcnZpY2VzIjpudWxsfQ.F-xtV3OaHoNN2cUG2nN9napDCnDuVs4FklZjNbXcMEc",
         },
       });
 
@@ -51,7 +51,7 @@ class TransactionApi {
         {
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzI1NjA3OTc0LCJpYXQiOjE3MjU2MDQzNzQsInVzZXJJZCI6IjI3YjZlZjliLWNlYWItNDcwYS05YTVmLWQ2YzlhMWU5ZDhhOSIsInJvbGUiOiJlbXBsb3llZSIsInNlcnZpY2VzIjpudWxsfQ.lNIyfxCsiVrIdPrCtmK4FE_fbV90WOvgUk-_U0hHjB4",
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzI1NjA4NjA3LCJpYXQiOjE3MjU2MDUwMDcsInVzZXJJZCI6ImRhNGFkODhiLTk5YjItNGJkZi04Y2M3LTU2M2Q0NjFkNTBlZSIsInJvbGUiOiJhZG1pbiIsInNlcnZpY2VzIjpudWxsfQ.F-xtV3OaHoNN2cUG2nN9napDCnDuVs4FklZjNbXcMEc",
           },
         }
       );
