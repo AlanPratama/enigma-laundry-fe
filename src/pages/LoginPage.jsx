@@ -18,7 +18,7 @@ const LoginPage = () => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			navigate("/dashboard", { replace: true, state: { from: "/login" } });
+			navigate("/", { replace: true, state: { from: "/login" } });
 		}
 	}, []);
 
@@ -28,7 +28,7 @@ const LoginPage = () => {
 			success: "Login sucessfull 👌",
 			error: "Login failed 🤯",
 		});
-		navigate("/dashboard");
+		navigate("/");
 	};
 
 	return (

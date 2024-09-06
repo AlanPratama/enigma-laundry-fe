@@ -29,14 +29,14 @@ export const App = () => {
 	}, []);
 
 	const router = createBrowserRouter([
-		{
-			path: "",
-			element: (
-				<PageLayout>
-					<Dashboard />
-				</PageLayout>
-			),
-		},
+		// {
+		// 	path: "",
+		// 	element: (
+		// 		<PageLayout>
+		// 			<HomePage />
+		// 		</PageLayout>
+		// 	),
+		// },
 		{
 			path: "login",
 			element: <LoginPage />,
