@@ -15,7 +15,8 @@ export const customersSlice = createSlice({
       state.total = total;
     },
     addCustomers(state, action) {
-      state.items = [...state.items, action.payload];
+      // state.items = [...state.items, action.payload];
+      state.items = [...state.items, action.payload.items];
       state.total += 1;
     },
     editCustomers(state, action) {
