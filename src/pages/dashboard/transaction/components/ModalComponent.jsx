@@ -147,62 +147,25 @@ function ModalComponent({
               )}
               {!isCreate && transaction && (
                 <div className="p-4">
-                  <h3 className="font-bold text-xl mb-2 text-primary">
-                    Customer Details
-                  </h3>
-                  <div className="bg-gray-100 p-4 rounded-md shadow-md">
-                    <p className="text-lg font-semibold">
-                      Name:{" "}
-                      <span className="font-normal">
-                        {transaction.customer.name}
-                      </span>
-                    </p>
-                    <p className="text-lg font-semibold">
-                      Phone:{" "}
-                      <span className="font-normal">
-                        {transaction.customer.phoneNumber}
-                      </span>
-                    </p>
-                    <p className="text-lg font-semibold">
-                      Address:{" "}
-                      <span className="font-normal">
-                        {transaction.customer.address}
-                      </span>
-                    </p>
-                  </div>
-
-                  <h3 className="font-bold text-xl mt-6 mb-2 text-primary">
-                    Bill Details
-                  </h3>
-                  <div className="bg-gray-100 p-4 rounded-md shadow-md">
-                    {transaction.billDetails.map((bill, index) => (
-                      <div key={index} className="mb-4">
-                        <p className="text-lg font-semibold">
-                          Product:{" "}
-                          <span className="font-normal">
-                            {bill.product.name}
-                          </span>
-                        </p>
-                        <p className="text-lg font-semibold">
-                          Price:{" "}
-                          <span className="font-normal">
-                            {bill.product.price}
-                          </span>
-                        </p>
-                        <p className="text-lg font-semibold">
-                          Type:{" "}
-                          <span className="font-normal">
-                            {bill.product.type}
-                          </span>
-                        </p>
-                        <p className="text-lg font-semibold">
-                          Quantity:{" "}
-                          <span className="font-normal">{bill.qty}</span>
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                <h3 className="font-bold text-xl mb-2 text-primary">Customer Details</h3>
+                <div className="bg-gray-100 p-4 rounded-md shadow-md">
+                  <p className="text-lg font-semibold">Name: <span className="font-normal">{transaction.customer.name}</span></p>
+                  <p className="text-lg font-semibold">Phone: <span className="font-normal">{transaction.customer.phoneNumber}</span></p>
+                  <p className="text-lg font-semibold">Address: <span className="font-normal">{transaction.customer.address}</span></p>
                 </div>
+              
+                <h3 className="font-bold text-xl mt-6 mb-2 text-primary">Bill Details</h3>
+                <div className="bg-gray-100 p-4 rounded-md shadow-md">
+                  {transaction.billDetails.map((bill, index) => (
+                    <div key={index} className="mb-4">
+                      <p className="text-lg font-semibold">Product: <span className="font-normal">{bill.product.name}</span></p>
+                      <p className="text-lg font-semibold">Price: <span className="font-normal">Rp {bill.product.price.toLocaleString("id-ID")}</span></p>
+                      <p className="text-lg font-semibold">Type: <span className="font-normal">{bill.product.type}</span></p>
+                      <p className="text-lg font-semibold">Quantity: <span className="font-normal">{bill.qty}</span></p>
+                    </div>
+                  ))}
+                </div>
+              </div>
               )}
             </ModalBody>
             <ModalFooter>

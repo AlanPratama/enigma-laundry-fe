@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const DashboardPage = () => {
@@ -19,14 +19,13 @@ const DashboardPage = () => {
         pauseOnHover: true,
         draggable: true,
       });
-  }, []);
+  }, [isFromLogin, user.iss]);
 
   return (
     <div>
       <h1>DashboardPage</h1>
       <p>hello {user.iss}</p>
 
-      <ToastContainer />
     </div>
   );
 };

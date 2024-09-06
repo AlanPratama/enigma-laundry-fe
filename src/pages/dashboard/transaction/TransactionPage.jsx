@@ -10,12 +10,12 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
+import { AddCircle, EyeOutline } from "react-ionicons";
 import { useSelector } from "react-redux";
 import TransactionApi from "../../../apis/TransactionsApi";
 import CustomerApi from "../../../apis/CustomersApi"
 import ProductApi from "../../../apis/ProductsApi"
 import ModalComponent from "./components/ModalComponent";
-import { AddCircleOutline, EyeOutline } from "react-ionicons";
 
 function BillPage() {
   const data = useSelector((state) => state.transactions);
@@ -47,15 +47,34 @@ function BillPage() {
     }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const dayName = new Intl.DateTimeFormat("id-ID", {
+      weekday: "long",
+    }).format(date);
+    const day = date.getDate();
+    const monthName = new Intl.DateTimeFormat("id-ID", {
+      month: "short",
+    }).format(date);
+    const year = date.getFullYear();
+    const time = date.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    return `${dayName}, ${day} ${monthName} ${year} (${time})`;
+  };
+
   console.log("customers", customers);
   
 
   return (
-    <div className="flex justify-center items-start pt-12 h-screen">
-      <Card className="w-11/12">
+    <div className="flex justify-center items-start pt-6 px-3 h-screen">
+      <Card className="w-full">
         <CardHeader className="flex justify-between mt-2">
           <h1 className="font-bold text-start text-xl p-2">
-            Transaction Table
+            Daftar Transaksi
           </h1>
           <Button
             color="primary"
@@ -66,7 +85,7 @@ function BillPage() {
               onOpen();
             }}
           >
-            <AddCircleOutline name="add-circle-outline" color="white" /> Tambah
+            <AddCircle color="white" /> Tambah
             Transaksi
           </Button>
         </CardHeader>
@@ -89,12 +108,14 @@ function BillPage() {
                     <TableCell>{transaction.user.name}</TableCell>
                     <TableCell>{transaction.customer.phoneNumber}</TableCell>
                     <TableCell>
-                      {new Date(transaction.billDate).toLocaleDateString()}{" "}
-                      {new Date(transaction.billDate).toLocaleTimeString("en-GB")}
+                      {/* {new Date(transaction.billDate).toLocaleDateString()}{" "}
+                      {new Date(transaction.billDate).toLocaleTimeString("en-GB")} */}
+                      {formatDate(transaction.billDate)}
                     </TableCell>
                     <TableCell>
                       <Button
                         className="mx-1"
+                        variant="flat"
                         color="primary"
                         onPress={() => {
                           setSelectedTransaction(transaction);
@@ -103,7 +124,7 @@ function BillPage() {
                           onOpen();
                         }}
                       >
-                        <EyeOutline color="white" /> Detail
+                        <EyeOutline color="blue" /> Detail
                       </Button>
                     </TableCell>
                   </TableRow>

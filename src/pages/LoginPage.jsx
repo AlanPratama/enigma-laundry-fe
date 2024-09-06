@@ -28,7 +28,7 @@ const LoginPage = () => {
 			success: "Login sucessfull 👌",
 			error: "Login failed 🤯",
 		});
-		navigate("/dashboard", { replace: true, state: { from: "/login" } });
+		navigate("/dashboard");
 	};
 
 	return (
