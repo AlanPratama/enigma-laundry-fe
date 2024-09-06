@@ -51,7 +51,7 @@ function ModalComponent({
   const handleSelectChange = (value, field) => {
     setFormData({
       ...formData,
-      [field]: value
+      [field]: value.target.value
     })
     console.log("formdata 123", formData);
     
@@ -59,7 +59,7 @@ function ModalComponent({
 
   const handleBillDetailsChange = (value, index) => {
     const updatedBillDetails = [...formData.billDetails]
-    updatedBillDetails[index].product.id = value
+    updatedBillDetails[index].product.id = value.target.value
     setFormData({
       ...formData,
       billDetails: updatedBillDetails
