@@ -209,7 +209,7 @@ function CustomerPage() {
                       <TableCell>{customer.address}</TableCell>
                       <TableCell>{formatDate(customer?.createdAt)}</TableCell>
                       <TableCell>{formatDate(customer?.updatedAt)}</TableCell>
-                      <TableCell className="flex justify-start items-center gap-2">
+                      <TableCell className="flex justify-start items-center gap-2 h-[56px]">
                         <Button
                           variant="flat"
                           color="primary"
