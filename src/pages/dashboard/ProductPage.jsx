@@ -33,140 +33,8 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ProductApi from "../../apis/ProductsApi";
 
-const AddProductModal = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const cancelRef = useRef();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = async () => {
-    const productData = {
-      name: watch("name"),
-      price: parseInt(watch("price")),
-      type: watch("type"),
-    };
-    console.log(productData);
-
-    await ProductApi.createProduct(productData);
-    cancelRef.current.click();
-
-    setValue("name", "");
-    setValue("price", "");
-    setValue("type", "");
-
-    toast.success(`Produk Berhasil Dibuat!`, {
-      position: "top-center",
-      autoClose: 4000,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
-  };
-
-  return (
-    <>
-      <Button
-        onPress={onOpen}
-        color="primary"
-        variant="solid"
-        size="md"
-        className="rounded-xl font-semibold"
-      >
-        <AddCircle color={"#fff"} /> Tambah Product
-      </Button>
-      <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        isDismissable={false}
-        isKeyboardDismissDisabled={true}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <ModalContent>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <ModalHeader className="flex flex-col gap-1">
-                  Tambah Produk
-                </ModalHeader>
-                <ModalBody>
-                  <>
-                    <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
-                      <BagAddOutline
-                        color={"#606060"}
-                        // className="absolute top-2.5 left-3"
-                      />
-                      <input
-                        {...register("name", { required: true })}
-                        type="text"
-                        placeholder="Nama produk..."
-                        className="w-full px-3 py-2 rounded-r-xl"
-                      />
-                    </div>
-                    <span className="text-red-500 text-sm">
-                      {errors.name && "Nama harus diisi"}
-                    </span>
-                    <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
-                      <PricetagOutline
-                        color={"#606060"}
-                        // className="absolute top-2.5 left-3"
-                      />
-                      <input
-                        {...register("price", { required: true, min: 0 })}
-                        type="number"
-                        min={0}
-                        placeholder="Harga produk..."
-                        className="w-full px-3 py-2 rounded-r-xl"
-                      />
-                    </div>
-                    <span className="text-red-500 text-sm">
-                      {errors.price && "Harga harus diisi"}
-                    </span>
-                    <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
-                      <KeypadOutline
-                        color={"#606060"}
-                        // className="absolute top-2.5 left-3"
-                      />
-                      <input
-                        {...register("type", { required: true })}
-                        type="text"
-                        placeholder="Type produk..."
-                        className="w-full px-3 py-2 rounded-r-xl"
-                      />
-                    </div>
-                    <span className="text-red-500 text-sm">
-                      {errors.type && "Tipe harus diisi"}
-                    </span>
-                  </>
-                </ModalBody>
-                <ModalFooter>
-                  <Button
-                    color="danger"
-                    ref={cancelRef}
-                    variant="light"
-                    onPress={onClose}
-                  >
-                    Close
-                  </Button>
-                  <Button color="primary" type="submit">
-                    Submit
-                  </Button>
-                </ModalFooter>
-              </form>
-            </ModalContent>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
-  );
-};
-
 const ProductPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  // const [search, setSearch] = useState("");
   const [productChange, setProductChange] = useState({});
   const [modalType, setModalType] = useState("update");
   const { items } = useSelector((state) => state.products);
@@ -174,6 +42,14 @@ const ProductPage = () => {
   const getProduct = async () => {
     await ProductApi.getProducts();
     setIsLoading(false);
+  };
+
+  const handleCreateModal = () => {
+    setModalType("create");
+    setValue("name", "");
+    setValue("price", "");
+    setValue("type", "");
+    onOpen();
   };
 
   const handleUpdateModal = (item) => {
@@ -211,7 +87,16 @@ const ProductPage = () => {
   }, [productChange, setValue]);
 
   const onSubmit = async () => {
-    if (modalType === "update") {
+    if (modalType === "delete") {
+      await ProductApi.deleteProduct(productChange.id);
+      toast.success("Produk Berhasil Dihapus!", {
+        position: "top-center",
+        autoClose: 4000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else {
       const productData = {
         id: productChange.id,
         name: watch("name"),
@@ -223,17 +108,15 @@ const ProductPage = () => {
       setValue("type", "");
       console.log(productData);
 
-      await ProductApi.updateProduct(productData);
-      toast.success("Produk Berhasil Diubah!", {
-        position: "top-center",
-        autoClose: 4000,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    } else {
-      await ProductApi.deleteProduct(productChange.id);
-      toast.success("Produk Berhasil Dihapus!", {
+      if (modalType === "create") await ProductApi.createProduct(productData);
+      else await ProductApi.updateProduct(productData);
+
+      const message =
+        modalType === "create"
+          ? "Produk Berhasil Ditambahkan!"
+          : "Produk Berhasil Diubah!";
+
+      toast.success(message, {
         position: "top-center",
         autoClose: 4000,
         closeOnClick: true,
@@ -263,22 +146,6 @@ const ProductPage = () => {
     return `${dayName}, ${day} ${monthName} ${year} (${time})`;
   };
 
-  // const handleSearch = () => {
-  //   if (search === "") {
-  //     // getProduct();
-  //   } else {
-
-  //     items.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
-
-  //     console.log("asasa");
-
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   handleSearch()
-  // }, [search])
-
   return (
     <div className="flex justify-center items-start pt-6 px-3 h-screen">
       <Card className="w-full">
@@ -298,7 +165,16 @@ const ProductPage = () => {
             value={search}
           />
         </div> */}
-            <AddProductModal />
+            {/* <AddProductModal /> */}
+            <Button
+              onPress={handleCreateModal}
+              color="primary"
+              variant="solid"
+              size="md"
+              className="rounded-xl font-semibold"
+            >
+              <AddCircle color={"#fff"} /> Tambah Product
+            </Button>
           </div>
         </CardHeader>
         <CardBody>
@@ -380,10 +256,25 @@ const ProductPage = () => {
               <ModalContent>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <ModalHeader className="flex flex-col gap-1">
-                    {modalType === "update" ? "Edit" : "Hapus"} Produk
+                    {modalType === "create"
+                      ? "Tambah"
+                      : modalType === "update"
+                      ? "Edit"
+                      : "Hapus"}{" "}
+                    Produk
                   </ModalHeader>
                   <ModalBody>
-                    {modalType === "update" ? (
+                    {modalType === "delete" ? (
+                      <div>
+                        <p>
+                          Apakah kamu yakin akan menghapus produk ini{" "}
+                          <span className="text-red-500 font-semibold">
+                            {productChange.name}
+                          </span>
+                          ?{" "}
+                        </p>
+                      </div>
+                    ) : (
                       <>
                         <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
                           <BagAddOutline color={"#606060"} />
@@ -431,16 +322,6 @@ const ProductPage = () => {
                         <span className="text-red-500 text-sm">
                           {errors.type && "Tipe harus diisi"}
                         </span>
-                      </>
-                    ) : (
-                      <>
-                        <p>
-                          Apakah kamu yakin akan menghapus produk ini{" "}
-                          <span className="text-blue-600 font-medium">
-                            {productChange.name}
-                          </span>
-                          ?{" "}
-                        </p>
                       </>
                     )}
                   </ModalBody>
