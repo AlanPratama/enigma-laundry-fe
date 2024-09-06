@@ -1,0 +1,119 @@
+.dashboard-container {
+    padding: 20px;
+  }
+  
+  .dashboard-title {
+    font-family: 'Montserrat', sans-serif;
+    color: #212519;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .dashboard-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    color: #6d6f72;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .summary-cards {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  
+  .summary-card {
+    width: 22%;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  /* Specific Card Styles */
+  
+  /* Product Card */
+  .product-card {
+    background-color: #ff8946;
+  }
+  
+  .product-card h3, .transaction-card p {
+    color: #fff;
+  }
+  
+  .product-card:hover p {
+    color: #233d90; /* Hanya teks nilai yang berubah */
+  }
+  
+  /* Customer Card */
+  .customer-card {
+    background-color: #233d90;
+  }
+  
+  .customer-card h3, .customer-card p {
+    color: #fff;
+  }
+  
+  .customer-card:hover p {
+    color: #ff8946; /* Hanya teks nilai yang berubah */
+  }
+  
+  /* Transaction Card */
+  .transaction-card {
+    background-color: #ff8946;
+  }
+  
+  .transaction-card h3, .transaction-card p {
+    color: #fff;
+  }
+  
+  .transaction-card:hover p {
+    color: #233d90; /* Hanya teks nilai yang berubah */
+  }
+  
+  /* Revenue Card */
+  .revenue-card {
+    background-color: #233d90;
+  }
+  
+  .revenue-card h3, .revenue-card p {
+    color: #fff;
+  }
+  
+  .revenue-card:hover p {
+    color: #ff8946; /* Hanya teks nilai yang berubah */
+  }
+  
+  /* Recent Section */
+  .recent-section {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .recent-box {
+    width: 48%;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: #212519;
+    margin-bottom: 10px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    font-family: 'Montserrat', sans-serif;
+    color: #6d6f72;
+    margin-bottom: 8px;
+  }
