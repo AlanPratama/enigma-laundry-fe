@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Avatar, Button } from "@nextui-org/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "/logo.png";
 import { useSelector } from "react-redux";
@@ -24,9 +24,17 @@ function Sidebar() {
         <button onClick={() => handleNavigate("/")}>
           <img className="mx-auto w-3/4" src={logo} />
         </button>
-        <div className="bg-blue-500 w-full mx-auto text-white">
-          <p className="text-center font-semibold">{user.iss}</p>
-          <p className="text-center font-semibold">{user.role}</p>
+        <div className="w-3/4 bg-blue-600 rounded-full pr-4 text-white mx-auto justify-center flex flex-row space-x-2">
+          <Avatar
+            name={user.iss[0].toUpperCase()}
+            className="my-auto font-bold"
+            isBordered
+            color="primary"
+          />
+          <div className="flex flex-col">
+            <p className="text-center font-semibold">{user.iss}</p>
+            <p className="text-center font-semibold">{user.role}</p>
+          </div>
         </div>
         <hr className="my-4" />
         <ul className="space-y-2 font-medium mx-4">
