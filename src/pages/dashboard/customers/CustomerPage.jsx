@@ -113,16 +113,20 @@ function CustomerPage() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-  
-    const dayName = new Intl.DateTimeFormat("id-ID", { weekday: "long" }).format(date);
+
+    const dayName = new Intl.DateTimeFormat("id-ID", {
+      weekday: "long",
+    }).format(date);
     const day = date.getDate();
-    const monthName = new Intl.DateTimeFormat("id-ID", { month: "short" }).format(date);
+    const monthName = new Intl.DateTimeFormat("id-ID", {
+      month: "short",
+    }).format(date);
     const year = date.getFullYear();
     const time = date.toLocaleTimeString("id-ID", {
       hour: "2-digit",
       minute: "2-digit",
     });
-  
+
     return `${dayName}, ${day} ${monthName} ${year} (${time})`;
   };
 
@@ -205,7 +209,7 @@ function CustomerPage() {
                       <TableCell>{customer.address}</TableCell>
                       <TableCell>{formatDate(customer?.createdAt)}</TableCell>
                       <TableCell>{formatDate(customer?.updatedAt)}</TableCell>
-                      <TableCell className="space-x-2">
+                      <TableCell className="flex justify-start items-center gap-2">
                         <Button
                           variant="flat"
                           color="primary"

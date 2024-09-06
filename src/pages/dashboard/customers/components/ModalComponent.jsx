@@ -125,7 +125,10 @@ function ModalComponent({
                   />
                 </form>
               ) : (
-                <h1>Yakin ingin menghapus pelanggan ini?</h1>
+                <p>
+                  Yakin ingin menghapus pelanggan{" "}
+                  <span className="text-blue-600">{customer.name}</span>?
+                </p>
               )}
             </ModalBody>
             <ModalFooter>
