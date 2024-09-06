@@ -8,9 +8,9 @@ export const PageLayout = ({ children }) => {
 
 export const DashboardPageLayout = () => {
   return (
-    <div style={{ display: "flex" }}>
+    <div className="flex" style={{ overflowX: "clip" }}>
       <Sidebar />
-      <main className="w-full">
+      <main className="w-full flex-shrink">
         <Outlet />
       </main>
     </div>
