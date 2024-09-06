@@ -19,7 +19,7 @@ const DashboardPage = () => {
         pauseOnHover: true,
         draggable: true,
       });
-  }, []);
+  }, [isFromLogin, user.iss]);
 
   return (
     <div>
