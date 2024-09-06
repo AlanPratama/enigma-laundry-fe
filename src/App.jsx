@@ -1,18 +1,17 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { Spinner } from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
-import { DashboardPageLayout, PageLayout } from "./layouts/PageLayout";
-import { login } from "./redux/auth/authSlice";
-import store from "./redux/store";
-import HomePage from "./pages/HomePage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { DashboardPageLayout } from "./layouts/PageLayout";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/dashboard";
-import CustomerPage from "./pages/dashboard/customers/CustomerPage";
-import ProtectedRoute from "./components/ProtectedRoute";
 import ProductPage from "./pages/dashboard/ProductPage";
+import CustomerPage from "./pages/dashboard/customers/CustomerPage";
 import BillPage from "./pages/dashboard/transaction/TransactionPage";
+import { login } from "./redux/auth/authSlice";
+import store from "./redux/store";
+import { Spinner } from "@nextui-org/react";
 
 export const App = () => {
   const setUser = () => {
@@ -28,54 +27,6 @@ export const App = () => {
     setLoading(false);
   }, []);
 
-
-	const router = createBrowserRouter([
-		// {
-		// 	path: "",
-		// 	element: (
-		// 		<PageLayout>
-		// 			<HomePage />
-		// 		</PageLayout>
-		// 	),
-		// },
-		{
-			path: "login",
-			element: <LoginPage />,
-		},
-		{
-			path: "/",
-			element: (
-				<ProtectedRoute>
-					<Outlet />
-				</ProtectedRoute>
-			),
-			children: [
-				{
-					path: "",
-					element: <DashboardPageLayout />,
-					children: [
-						{
-							path: "",
-							element: <DashboardPage />,
-						},
-						{
-							path: "products",
-							element: <ProductPage />,
-						},
-						{
-							path: "customers",
-							element: <CustomerPage />,
-						},
-						{
-							path: "bills",
-							element: <BillPage />,
-						},
-					],
-				},
-			],
-		},
-	]);
-=======
   const router = createBrowserRouter([
     // {
     // 	path: "",
