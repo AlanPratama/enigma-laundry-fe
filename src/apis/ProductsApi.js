@@ -34,22 +34,8 @@ class ProductApi {
       store.dispatch(setIsLoading(true));
       const res = await axiosInstance.post("/products/", { ...productData });
       store.dispatch(addProduct(res.data.data));
-      toast.success("Produk Berhasil Dibuat!", {
-        position: "top-center",
-        autoClose: 2500,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
     } catch (error) {
       store.dispatch(setError(error));
-      toast.error("Produk Gagal Dibuat!", {
-        position: "top-center",
-        autoClose: 2500,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
       console.log("ProductApi createProduct", error.message);
     } finally {
       store.dispatch(setIsLoading(false));
@@ -61,22 +47,15 @@ class ProductApi {
       store.dispatch(setIsLoading(true));
       const res = await axiosInstance.put(`/products/`, { ...productData });
       store.dispatch(editProduct(res.data.data));
-      toast.success("Produk Berhasil Diubah!", {
-        position: "top-center",
-        autoClose: 2500,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      // toast.success("Produk Berhasil Diubah!", {
+      //   position: "top-center",
+      //   autoClose: 2500,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      // });
     } catch (error) {
       store.dispatch(setError(error));
-      toast.error("Produk Gagal Diubah!", {
-        position: "top-center",
-        autoClose: 2500,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
     } finally {
       store.dispatch(setIsLoading(false));
     }
@@ -86,22 +65,9 @@ class ProductApi {
     try {
       store.dispatch(setIsLoading(true));
       await axiosInstance.delete(`/products/${productId}`);
-      toast.success("Produk Berhasil Dihapus!", {
-        position: "top-center",
-        autoClose: 2500,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      this.getProducts()
     } catch (error) {
       store.dispatch(setError(error));
-      toast.error("Produk Gagal Dihapus!", {
-        position: "top-center",
-        autoClose: 2500,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
     } finally {
       store.dispatch(setIsLoading(false));
     }

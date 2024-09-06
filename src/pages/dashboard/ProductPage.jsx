@@ -129,7 +129,7 @@ const ProductPage = () => {
   return (
     <div className="m-8">
       <div className="flex justify-between mt-2 mb-4">
-        <h1 className="font-bold text-start text-xl p-2">Products</h1>
+        <h1 className="font-bold text-start text-xl p-2" data-testid="product-title">Products</h1>
         <div className="flex justify-center items-center gap-4">
           {/* <div className="relative w-auto">
           <Search
@@ -147,6 +147,7 @@ const ProductPage = () => {
           {/* <AddProductModal /> */}
           {user.role === "admin" && (
             <Button
+              data-testid="add-product-button"
               onPress={handleCreateModal}
               color="primary"
               variant="solid"
@@ -165,6 +166,7 @@ const ProductPage = () => {
         }}
       >
         <TableHeader>
+          <TableColumn key="id">Id Produk</TableColumn>
           <TableColumn key="name">Nama</TableColumn>
           <TableColumn key="price">Harga</TableColumn>
           <TableColumn key="type">Tipe</TableColumn>
@@ -181,6 +183,7 @@ const ProductPage = () => {
             return (
               <TableRow key={item.id}>
                 {/* Kolom Data */}
+                <TableCell>{item.id}</TableCell>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>Rp {item.price.toLocaleString("id-ID")}</TableCell>
                 <TableCell>{item.type}</TableCell>
@@ -189,6 +192,7 @@ const ProductPage = () => {
                 {/* Kolom Action */}
                 <TableCell className="flex justify-start items-center gap-2">
                   <Button
+                    data-testid={`edit-product-button-${item.id.split("-")[0]}`}
                     variant="flat"
                     color="primary"
                     size="sm"
@@ -197,6 +201,8 @@ const ProductPage = () => {
                     <PencilOutline color="blue" height="15px" /> Edit
                   </Button>
                   <Button
+                  className="z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover"
+                    data-testid={`delete-product-button-${item.id.split("-")[0]}`}  
                     variant="flat"
                     color="danger"
                     size="sm"
@@ -221,6 +227,8 @@ const ProductPage = () => {
       </Table>
       <div>
         <Modal
+        className="swal2-popup"
+          data-testid={modalType === "delete" ? "delete-product-modal" : "add-product-modal"}  
           isOpen={isOpen}
           onOpenChange={onOpenChange}
           isDismissable={false}
@@ -253,6 +261,8 @@ const ProductPage = () => {
                       <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
                         <BagAddOutline color={"#606060"} />
                         <input
+                          id="name"
+                          data-testid="product-name-input"
                           type="text"
                           {...register("name", { required: true })}
                           defaultValue={productChange.name}
@@ -260,7 +270,7 @@ const ProductPage = () => {
                           className="w-full px-3 py-2 rounded-r-xl"
                         />
                       </div>
-                      <span className="text-red-500 text-sm">
+                      <span data-testid={"name-error"} className="text-red-500 text-sm">
                         {errors.name && "Nama harus diisi"}
                       </span>
                       <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
@@ -269,6 +279,8 @@ const ProductPage = () => {
                           // className="absolute top-2.5 left-3"
                         />
                         <input
+                        id="price"
+                          data-testid="product-price-input"
                           type="number"
                           defaultValue={productChange.price}
                           {...register("price", { required: true, min: 0 })}
@@ -277,7 +289,7 @@ const ProductPage = () => {
                           className="w-full px-3 py-2 rounded-r-xl"
                         />
                       </div>
-                      <span className="text-red-500 text-sm">
+                      <span data-testid={"price-error"} className="text-red-500 text-sm">
                         {errors.price && "Harga harus diisi"}
                       </span>
                       <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
@@ -286,6 +298,8 @@ const ProductPage = () => {
                           // className="absolute top-2.5 left-3"
                         />
                         <input
+                          id="type"
+                          data-testid="product-type-input"  
                           defaultValue={productChange.type}
                           {...register("type", { required: true })}
                           type="text"
@@ -293,7 +307,7 @@ const ProductPage = () => {
                           className="w-full px-3 py-2 rounded-r-xl"
                         />
                       </div>
-                      <span className="text-red-500 text-sm">
+                      <span data-testid={"type-error"} className="text-red-500 text-sm">
                         {errors.type && "Tipe harus diisi"}
                       </span>
                     </>
@@ -301,6 +315,8 @@ const ProductPage = () => {
                 </ModalBody>
                 <ModalFooter>
                   <Button
+                    data-testid={modalType === "delete" ? "close-delete-product-modal" : "close-add-product-modal"}
+                    className="swal2-cancel"
                     color="danger"
                     ref={cancelRef}
                     variant="light"
@@ -308,7 +324,7 @@ const ProductPage = () => {
                   >
                     Close
                   </Button>
-                  <Button color="primary" type="submit">
+                  <Button className="z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover.z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover.z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover swal2-confirm" data-testid={modalType === "delete" ? "confirm-delete-button" : "submit-add-product"} color="primary" type="submit">
                     Submit
                   </Button>
                 </ModalFooter>
@@ -317,6 +333,7 @@ const ProductPage = () => {
           </ModalContent>
         </Modal>
       </div>
+
     </div>
   );
 };
