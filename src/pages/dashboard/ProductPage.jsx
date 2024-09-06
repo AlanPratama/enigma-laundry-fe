@@ -249,11 +249,10 @@ const ProductPage = () => {
           isOpen={isOpen}
           onOpenChange={onOpenChange}
           isDismissable={false}
-          isKeyboardDismissDisabled={true}
+          isKeyboardDismissDisabled={false}
         >
           <ModalContent>
             {(onClose) => (
-              <ModalContent>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <ModalHeader className="flex flex-col gap-1">
                     {modalType === "create"
@@ -339,7 +338,6 @@ const ProductPage = () => {
                     </Button>
                   </ModalFooter>
                 </form>
-              </ModalContent>
             )}
           </ModalContent>
         </Modal>
