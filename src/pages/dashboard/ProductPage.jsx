@@ -27,7 +27,7 @@ import {
   KeypadOutline,
   PencilOutline,
   PricetagOutline,
-  TrashBinOutline
+  TrashBinOutline,
 } from "react-ionicons";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -84,7 +84,7 @@ const ProductPage = () => {
     setValue("name", productChange.name);
     setValue("price", productChange.price);
     setValue("type", productChange.type);
-  }, [productChange]);
+  }, [productChange, setValue]);
 
   const onSubmit = async () => {
     if (modalType === "delete") {
