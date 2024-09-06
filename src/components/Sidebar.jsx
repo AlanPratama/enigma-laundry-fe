@@ -1,10 +1,13 @@
 import { Button } from "@nextui-org/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "/logo.png";
+import { useSelector } from "react-redux";
 
 function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  console.log(UserActivation);
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -21,6 +24,11 @@ function Sidebar() {
         <button onClick={() => handleNavigate("/")}>
           <img className="mx-auto w-3/4" src={logo} />
         </button>
+        <div className="bg-blue-500 w-full mx-auto text-white">
+          <p className="text-center font-semibold">{user.iss}</p>
+          <p className="text-center font-semibold">{user.role}</p>
+        </div>
+        <hr className="my-4" />
         <ul className="space-y-2 font-medium mx-4">
           <li>
             <Button
@@ -78,9 +86,7 @@ function Sidebar() {
               radius="sm"
               startContent={<ion-icon name="receipt-outline"></ion-icon>}
             >
-              <span className="ms-3 text-medium font-semibold">
-                Bills
-              </span>
+              <span className="ms-3 text-medium font-semibold">Bills</span>
             </Button>
           </li>
           <hr />
