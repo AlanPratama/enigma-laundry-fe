@@ -111,6 +111,25 @@ function CustomerPage() {
     return sortedCustomers.slice(start, end);
   }, [page, sortedCustomers]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const dayName = new Intl.DateTimeFormat("id-ID", {
+      weekday: "long",
+    }).format(date);
+    const day = date.getDate();
+    const monthName = new Intl.DateTimeFormat("id-ID", {
+      month: "short",
+    }).format(date);
+    const year = date.getFullYear();
+    const time = date.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    return `${dayName}, ${day} ${monthName} ${year} (${time})`;
+  };
+
   useEffect(() => {
     fetchCustomers();
   }, []);
@@ -188,22 +207,13 @@ function CustomerPage() {
                       <TableCell>{customer.name}</TableCell>
                       <TableCell>{customer.phoneNumber}</TableCell>
                       <TableCell>{customer.address}</TableCell>
-                      <TableCell>
-                        {new Date(customer.createdAt).toLocaleDateString()}{" "}
-                        {new Date(customer.createdAt).toLocaleTimeString(
-                          "en-GB"
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {new Date(customer.updatedAt).toLocaleDateString()}{" "}
-                        {new Date(customer.updatedAt).toLocaleTimeString(
-                          "en-GB"
-                        )}
-                      </TableCell>
-                      <TableCell>
+                      <TableCell>{formatDate(customer.createdAt)}</TableCell>
+                      <TableCell>{formatDate(customer.updatedAt)}</TableCell>
+                      <TableCell className="space-x-2">
                         <Button
-                          isIconOnly
-                          variant="light"
+                          variant="flat"
+                          color="primary"
+                          size="sm"
                           onPress={() => {
                             setSelectedCustomer(customer);
                             setModaltitle("Edit Pelanggan");
@@ -213,10 +223,12 @@ function CustomerPage() {
                           }}
                         >
                           <ion-icon name="pencil-outline"></ion-icon>
+                          Edit
                         </Button>
                         <Button
-                          isIconOnly
-                          variant="light"
+                          variant="flat"
+                          color="danger"
+                          size="sm"
                           onPress={() => {
                             setModaltitle("Hapus Pelanggan");
                             setIsDeleteModal(true);
@@ -229,6 +241,7 @@ function CustomerPage() {
                             style={{ color: "red" }}
                             name="trash-outline"
                           ></ion-icon>
+                          Delete
                         </Button>
                       </TableCell>
                     </TableRow>
