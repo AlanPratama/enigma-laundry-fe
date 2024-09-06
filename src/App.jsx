@@ -33,7 +33,7 @@ export const App = () => {
 			path: "",
 			element: (
 				<PageLayout>
-					<HomePage />
+					<Dashboard />
 				</PageLayout>
 			),
 		},
@@ -50,7 +50,7 @@ export const App = () => {
 			),
 			children: [
 				{
-					path: "dashboard",
+					path: "",
 					element: <DashboardPageLayout />,
 					children: [
 						{

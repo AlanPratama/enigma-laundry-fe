@@ -59,11 +59,11 @@ function Sidebar() {
           <ul className="space-y-2 font-medium mx-4">
             <li>
               <Button
-                onClick={() => handleNavigate("/dashboard")}
+                onClick={() => handleNavigate("/")}
                 variant="light"
                 color="primary"
                 className={`${
-                  location.pathname == "/dashboard" && "bg-blue-500 text-white"
+                  location.pathname == "/" && "bg-blue-500 text-white"
                 } w-full justify-start`}
                 radius="sm"
                 startContent={<ion-icon name="home-outline"></ion-icon>}
@@ -75,11 +75,11 @@ function Sidebar() {
             </li>
             <li>
               <Button
-                onClick={() => handleNavigate("/dashboard/products")}
+                onClick={() => handleNavigate("/products")}
                 variant="light"
                 color="primary"
                 className={`${
-                  location.pathname == "/dashboard/products" &&
+                  location.pathname == "/products" &&
                   "bg-blue-500 text-white"
                 } w-full justify-start`}
                 radius="sm"
@@ -90,11 +90,11 @@ function Sidebar() {
             </li>
             <li>
               <Button
-                onClick={() => handleNavigate("/dashboard/customers")}
+                onClick={() => handleNavigate("/customers")}
                 variant="light"
                 color="primary"
                 className={`${
-                  location.pathname == "/dashboard/customers" &&
+                  location.pathname == "/customers" &&
                   "bg-blue-500 text-white"
                 } w-full justify-start`}
                 radius="sm"
@@ -107,11 +107,11 @@ function Sidebar() {
             </li>
             <li>
               <Button
-                onClick={() => handleNavigate("/dashboard/bills")}
+                onClick={() => handleNavigate("/bills")}
                 variant="light"
                 color="primary"
                 className={`${
-                  location.pathname == "/dashboard/bills" &&
+                  location.pathname == "/bills" &&
                   "bg-blue-500 text-white"
                 } w-full justify-start`}
                 radius="sm"
