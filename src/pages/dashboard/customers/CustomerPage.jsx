@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from "react";
 import {
   Button,
   Card,
@@ -13,10 +12,11 @@ import {
   TableRow,
   useDisclosure,
 } from "@nextui-org/react";
-import ModalComponent from "./components/ModalComponent";
-import CustomerApi from "../../../apis/CustomersApi";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import CustomerApi from "../../../apis/CustomersApi";
+import ModalComponent from "./components/ModalComponent";
 
 function CustomerPage() {
   const { items } = useSelector((state) => state.customers);
@@ -132,8 +132,8 @@ function CustomerPage() {
 
   return (
     <>
-      <div className="flex flex-1 justify-center m-8">
-        <Card shadow="">
+      <div className="flex items-center justify-center pt-6 px-3">
+        <Card shadow="w-full">
           <CardHeader className="flex justify-between mt-2">
             <h1 className="text-xl font-bold p-2">Daftar Pelanggan</h1>
             <Button
@@ -260,7 +260,6 @@ function CustomerPage() {
         handleEditCustomer={handleEditCustomers}
         isCreate={isCreate}
       />
-      <ToastContainer />
     </>
   );
 }

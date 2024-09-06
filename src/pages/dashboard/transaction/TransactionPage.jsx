@@ -10,10 +10,10 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
+import { AddCircleOutline, EyeOutline } from "react-ionicons";
 import { useSelector } from "react-redux";
 import TransactionApi from "../../../apis/TransactionsApi";
 import ModalComponent from "./components/ModalComponent";
-import { AddCircleOutline, EyeOutline } from "react-ionicons";
 
 function BillPage() {
   const data = useSelector((state) => state.transactions);
@@ -42,8 +42,8 @@ function BillPage() {
   };
 
   return (
-    <div className="flex justify-center items-start pt-12 h-screen">
-      <Card className="w-11/12">
+    <div className="flex justify-center items-start pt-6 px-3 h-screen">
+      <Card className="w-full">
         <CardHeader className="flex justify-between mt-2">
           <h1 className="font-bold text-start text-xl p-2">
             Transaction Table
