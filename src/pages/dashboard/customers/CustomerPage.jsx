@@ -16,6 +16,7 @@ import {
 import ModalComponent from "./components/ModalComponent";
 import CustomerApi from "../../../apis/CustomersApi";
 import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
 
 function CustomerPage() {
   const { items } = useSelector((state) => state.customers);
@@ -38,6 +39,13 @@ function CustomerPage() {
   const handleCreateCustomers = async (customer) => {
     try {
       await CustomerApi.createCustomers(customer);
+      toast.success("Produk Berhasil Dibuat!", {
+        position: "top-center",
+        autoClose: 4000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       fetchCustomers();
     } catch (error) {
       console.error("Error creating customer:", error);
@@ -47,6 +55,13 @@ function CustomerPage() {
   const handleEditCustomers = async (customer) => {
     try {
       await CustomerApi.editCustomer(customer);
+      toast.success("Pelanggan Berhasil Diubah!", {
+        position: "top-center",
+        autoClose: 4000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       fetchCustomers();
     } catch (error) {
       console.error("Error editing customer:", error);
@@ -56,6 +71,13 @@ function CustomerPage() {
   const handleDeleteCustomers = async (customer) => {
     try {
       await CustomerApi.deleteCustomers(customer);
+      toast.success("Pelanggan Berhasil Dihapus!", {
+        position: "top-center",
+        autoClose: 4000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       fetchCustomers();
     } catch (error) {
       console.error("Error deleting customer:", error);
@@ -228,6 +250,7 @@ function CustomerPage() {
         handleEditCustomer={handleEditCustomers}
         isCreate={isCreate}
       />
+      <ToastContainer />
     </>
   );
 }
