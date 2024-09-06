@@ -15,7 +15,6 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/", { replace: true, state: { from: "/login" } });
@@ -30,7 +29,7 @@ const LoginPage = () => {
     });
     navigate("/");
   };
-
+  
   return (
     <div className="relative">
       <img

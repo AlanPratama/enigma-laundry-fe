@@ -6,8 +6,10 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Select,
+  SelectItem,
 } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ModalComponent({
   isOpen,
@@ -16,6 +18,8 @@ function ModalComponent({
   transaction,
   isCreate,
   handleCreateTransaction,
+  customers,
+  products,
 }) {
   const [formData, setFormData] = useState({
     customerId: "",
@@ -44,13 +48,33 @@ function ModalComponent({
     }
   };
 
+  const handleSelectChange = (value, field) => {
+    setFormData({
+      ...formData,
+      [field]: value
+    })
+    console.log("formdata 123", formData);
+    
+  }
+
+  const handleBillDetailsChange = (value, index) => {
+    const updatedBillDetails = [...formData.billDetails]
+    updatedBillDetails[index].product.id = value
+    setFormData({
+      ...formData,
+      billDetails: updatedBillDetails
+    })
+    console.log("bill detail123", formData);
+    
+  }
+
   const handleSubmit = () => {
     if (
       !formData.customerId ||
       !formData.billDetails[0].product.id ||
       formData.billDetails[0].qty <= 0
     ) {
-      setError({ message: "Tidak boleh ada tabel yang kosong" });
+      setError({ message: "Tidak boleh ada isian yang kosong" });
       return;
     }
 
@@ -67,10 +91,22 @@ function ModalComponent({
           <>
             <ModalHeader>{title}</ModalHeader>
             <ModalBody>
-              {error.message && <p style={{ color: "red" }}>{error.message}</p>}
+              {error.message && isCreate && (
+                <p style={{ color: "red" }}>{error.message}</p>
+              )}
               {isCreate && (
                 <form onSubmit={handleSubmit}>
-                  <Input
+                  <Select
+                    items={customers.items}
+                    label="Customers"
+                    placeholder="Pilih Customers"
+                    className="pb-8"
+                    variant="bordered"
+                    onChange={(value) => handleSelectChange(value, "customerId")}
+                  >
+                    {(customer) => <SelectItem key={customer.id} value={customer.id}>{customer.name}</SelectItem>}
+                  </Select>
+                  {/* <Input
                     className="pb-8"
                     autoFocus
                     label="Customer ID"
@@ -79,15 +115,26 @@ function ModalComponent({
                     variant="bordered"
                     value={formData.customerId}
                     onChange={(e) => handleChange(e)}
-                  />
-                  <Input
+                  /> */}
+                  <Select
+                    items={products.items}
+                    label="Product"
+                    placeholder="Pilih Product"
+                    className="pb-8"
+                    variant="bordered"
+                    onChange={(value) => handleBillDetailsChange(value, 0)}
+                  >
+                    {(product) => <SelectItem key={product.id} value={product.id} >{product.name}</SelectItem>}
+                  </Select>
+                  {/* <Input
                     className="pb-8"
                     label="Product ID"
                     placeholder="Enter Product ID"
                     variant="bordered"
                     value={formData.billDetails[0].product.id}
                     onChange={(e) => handleChange(e, "product", 0)}
-                  />
+                  /> */}
+
                   <Input
                     label="Quantity"
                     placeholder="Enter Quantity"

@@ -14,7 +14,7 @@ class TransactionApi {
       const { data } = await axiosInstance.get("/bills/", {
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzI1NTU0MjAwLCJpYXQiOjE3MjU1NTA2MDAsInVzZXJJZCI6ImRhNGFkODhiLTk5YjItNGJkZi04Y2M3LTU2M2Q0NjFkNTBlZSIsInJvbGUiOiJhZG1pbiIsInNlcnZpY2VzIjpudWxsfQ.QnR0jy60WoorYUMv4DmSrGXvC58llKUhcf8XQqcjlHA",
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzI1NjA4NjA3LCJpYXQiOjE3MjU2MDUwMDcsInVzZXJJZCI6ImRhNGFkODhiLTk5YjItNGJkZi04Y2M3LTU2M2Q0NjFkNTBlZSIsInJvbGUiOiJhZG1pbiIsInNlcnZpY2VzIjpudWxsfQ.F-xtV3OaHoNN2cUG2nN9napDCnDuVs4FklZjNbXcMEc",
         },
       });
 
@@ -51,7 +51,7 @@ class TransactionApi {
         {
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzI1NTU0MjAwLCJpYXQiOjE3MjU1NTA2MDAsInVzZXJJZCI6ImRhNGFkODhiLTk5YjItNGJkZi04Y2M3LTU2M2Q0NjFkNTBlZSIsInJvbGUiOiJhZG1pbiIsInNlcnZpY2VzIjpudWxsfQ.QnR0jy60WoorYUMv4DmSrGXvC58llKUhcf8XQqcjlHA",
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzI1NjA4NjA3LCJpYXQiOjE3MjU2MDUwMDcsInVzZXJJZCI6ImRhNGFkODhiLTk5YjItNGJkZi04Y2M3LTU2M2Q0NjFkNTBlZSIsInJvbGUiOiJhZG1pbiIsInNlcnZpY2VzIjpudWxsfQ.F-xtV3OaHoNN2cUG2nN9napDCnDuVs4FklZjNbXcMEc",
           },
         }
       );
@@ -63,12 +63,15 @@ class TransactionApi {
       );
       // this.getTransactions()
     } catch (error) {
-      store.dispatch(setError(error));
-      throw new Error("TransactionAPI", error.message);
+      const errorMessage = error.response?.data?.message || error.message || "Unknown Error"
+      store.dispatch(setError({ message: errorMessage}));
+      throw new Error("TransactionAPI", errorMessage);
     } finally {
       store.dispatch(setIsLoading(false));
     }
   }
+
+
 }
 
 export default TransactionApi;

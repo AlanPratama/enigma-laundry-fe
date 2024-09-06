@@ -13,6 +13,8 @@ import React, { useEffect, useState } from "react";
 import { AddCircle, EyeOutline } from "react-ionicons";
 import { useSelector } from "react-redux";
 import TransactionApi from "../../../apis/TransactionsApi";
+import CustomerApi from "../../../apis/CustomersApi"
+import ProductApi from "../../../apis/ProductsApi"
 import ModalComponent from "./components/ModalComponent";
 
 function BillPage() {
@@ -21,9 +23,13 @@ function BillPage() {
   const [modalTitle, setModalTitle] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isCreate, setIsCreate] = useState(false);
+  const customers = useSelector((state) => state.customers)
+  const products = useSelector((state) => state.products)
 
   const getTransactions = async () => {
     await TransactionApi.getTransactions();
+    await CustomerApi.getCustomers()
+    await ProductApi.getProducts()
   };
 
   useEffect(() => {
@@ -37,7 +43,7 @@ function BillPage() {
       await TransactionApi.createTransactions(transaction);
       getTransactions();
     } catch (error) {
-      console.log("Error creating customers", error.message);
+      console.log("Error creating transacion", error.message);
     }
   };
 
@@ -59,6 +65,9 @@ function BillPage() {
 
     return `${dayName}, ${day} ${monthName} ${year} (${time})`;
   };
+
+  console.log("customers", customers);
+  
 
   return (
     <div className="flex justify-center items-start pt-6 px-3 h-screen">
@@ -131,6 +140,8 @@ function BillPage() {
         title={modalTitle}
         isCreate={isCreate}
         transaction={selectedTransaction}
+        customers={customers}
+        products={products}
         handleCreateTransaction={handleCreateTransactions}
       />
     </div>

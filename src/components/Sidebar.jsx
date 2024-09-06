@@ -92,7 +92,9 @@ function Sidebar() {
                 variant="light"
                 color="primary"
                 className={`${
+
                   location.pathname == "/customers" && "bg-blue-500 text-white"
+
                 } w-full justify-start`}
                 radius="sm"
                 startContent={<ion-icon name="people-outline"></ion-icon>}

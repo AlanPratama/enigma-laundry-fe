@@ -28,6 +28,54 @@ export const App = () => {
     setLoading(false);
   }, []);
 
+
+	const router = createBrowserRouter([
+		// {
+		// 	path: "",
+		// 	element: (
+		// 		<PageLayout>
+		// 			<HomePage />
+		// 		</PageLayout>
+		// 	),
+		// },
+		{
+			path: "login",
+			element: <LoginPage />,
+		},
+		{
+			path: "/",
+			element: (
+				<ProtectedRoute>
+					<Outlet />
+				</ProtectedRoute>
+			),
+			children: [
+				{
+					path: "",
+					element: <DashboardPageLayout />,
+					children: [
+						{
+							path: "",
+							element: <DashboardPage />,
+						},
+						{
+							path: "products",
+							element: <ProductPage />,
+						},
+						{
+							path: "customers",
+							element: <CustomerPage />,
+						},
+						{
+							path: "bills",
+							element: <BillPage />,
+						},
+					],
+				},
+			],
+		},
+	]);
+=======
   const router = createBrowserRouter([
     // {
     // 	path: "",
@@ -74,6 +122,7 @@ export const App = () => {
       ],
     },
   ]);
+  
 
   if (loading) {
     return (
