@@ -45,14 +45,13 @@ function Sidebar() {
           </button>
           <div className="w-3/4 bg-blue-600 lg:pr-4 rounded-full text-white mx-auto justify-center flex flex-row lg:space-x-2">
             <Avatar
-              name={user.iss[0].toUpperCase()}
               className="my-auto font-bold lg:block hidden"
               isBordered
               color="primary"
             />
             <div className="flex flex-col items-start">
-              <p className="text-center font-semibold">{user.iss}</p>
-              <p className="text-center font-semibold">{user.role}</p>
+              <p className="text-center font-light">{user.iss}</p>
+              <p className="text-center font-bold">{user.role}</p>
             </div>
           </div>
           <hr className="my-4" />
@@ -79,8 +78,7 @@ function Sidebar() {
                 variant="light"
                 color="primary"
                 className={`${
-                  location.pathname == "/products" &&
-                  "bg-blue-500 text-white"
+                  location.pathname == "/products" && "bg-blue-500 text-white"
                 } w-full justify-start`}
                 radius="sm"
                 startContent={<ion-icon name="pricetags-outline"></ion-icon>}
@@ -94,8 +92,9 @@ function Sidebar() {
                 variant="light"
                 color="primary"
                 className={`${
-                  location.pathname == "/customers" &&
-                  "bg-blue-500 text-white"
+
+                  location.pathname == "/customers" && "bg-blue-500 text-white"
+
                 } w-full justify-start`}
                 radius="sm"
                 startContent={<ion-icon name="people-outline"></ion-icon>}
@@ -111,8 +110,7 @@ function Sidebar() {
                 variant="light"
                 color="primary"
                 className={`${
-                  location.pathname == "/bills" &&
-                  "bg-blue-500 text-white"
+                  location.pathname == "/bills" && "bg-blue-500 text-white"
                 } w-full justify-start`}
                 radius="sm"
                 startContent={<ion-icon name="receipt-outline"></ion-icon>}
