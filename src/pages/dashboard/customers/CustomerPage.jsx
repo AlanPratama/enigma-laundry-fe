@@ -23,7 +23,7 @@ function CustomerPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [sortDescriptor, setSortDescriptor] = useState({
     column: "id",
-    direction: "ascending",
+    direction: "descending",
   });
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
@@ -135,7 +135,9 @@ function CustomerPage() {
     <>
       <div className="m-8">
         <div className="flex justify-between mb-4">
-          <h1 className="text-xl font-bold p-2">Customers</h1>
+          <h1 className="text-xl font-bold p-2" data-testid="customer-title">
+            Customers
+          </h1>
           <Button
             color="primary"
             onPress={() => {
@@ -145,6 +147,7 @@ function CustomerPage() {
               setIsCreate(true);
               onOpen();
             }}
+            data-testid="add-customer-button"
           >
             <ion-icon name="add-circle" size="small"></ion-icon>
             <span className="font-semibold">Tambah Pelanggan</span>
@@ -174,9 +177,9 @@ function CustomerPage() {
           }
         >
           <TableHeader>
-            {/* <TableColumn allowsSorting key="id">
-                  Id Pelanggan
-                </TableColumn> */}
+            <TableColumn allowsSorting key="id">
+              Id Pelanggan
+            </TableColumn>
             <TableColumn allowsSorting key="name">
               Nama
             </TableColumn>
@@ -198,7 +201,7 @@ function CustomerPage() {
             {sortedItems.map((customer) => {
               return (
                 <TableRow key={customer.id}>
-                  {/* <TableCell>{customer.id}</TableCell> */}
+                  <TableCell>{customer.id}</TableCell>
                   <TableCell>{customer.name}</TableCell>
                   <TableCell>{customer.phoneNumber}</TableCell>
                   <TableCell>{customer.address}</TableCell>
@@ -216,6 +219,7 @@ function CustomerPage() {
                         setIsCreate(false);
                         onOpen();
                       }}
+                      data-testid={`edit-customer-button-${customer.id}`}
                     >
                       <ion-icon name="pencil" size="small"></ion-icon>
                       Edit
@@ -231,6 +235,7 @@ function CustomerPage() {
                         setIsCreate(false);
                         onOpen();
                       }}
+                      data-testid={`delete-customer-button-${customer.id}`}
                     >
                       <ion-icon
                         style={{ color: "red" }}

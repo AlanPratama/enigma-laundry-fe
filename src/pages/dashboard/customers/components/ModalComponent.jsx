@@ -31,10 +31,8 @@ function ModalComponent({
       newErrors.name = "Nama harus diisi";
     }
 
-    const phonePattern = /^[0-9]{10,15}$/;
-    if (!formData.phoneNumber || !phonePattern.test(formData.phoneNumber)) {
-      newErrors.phoneNumber =
-        "Masukan nomor telpon yang valid (10 sampai 15 digit)";
+    if (!formData.phoneNumber || formData.phoneNumber.trim() === "") {
+      newErrors.phoneNumber = "Nomor telpon harus diisi";
     }
 
     if (!formData.address || formData.address.trim() === "") {
@@ -84,6 +82,7 @@ function ModalComponent({
       onClose={() => {
         setFormData({});
       }}
+      data-testid="customer-modal"
     >
       <ModalContent>
         {(onClose) => (
@@ -102,6 +101,7 @@ function ModalComponent({
                     onChange={handleInputChange}
                     isInvalid={!!errors.name}
                     errorMessage={errors.name}
+                    data-testid="customer-modal-name-input"
                   />
                   <Input
                     isRequired
@@ -123,6 +123,7 @@ function ModalComponent({
                     onChange={handleInputChange}
                     isInvalid={!!errors.address}
                     errorMessage={errors.address}
+                    data-testid="customer-modal-address-input"
                   />
                 </form>
               ) : (
@@ -133,7 +134,16 @@ function ModalComponent({
               )}
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
+              <Button
+                data-testid={
+                  isDeleteModal
+                    ? "cancel-delete-button"
+                    : "customer-modal-close-button"
+                }
+                color="danger"
+                variant="light"
+                onPress={onClose}
+              >
                 Batal
               </Button>
               <Button
@@ -146,7 +156,11 @@ function ModalComponent({
                     handleDelete();
                   }
                 }}
-                data-testid="customer-modal-submit"
+                data-testid={
+                  isDeleteModal
+                    ? "confirm-delete-button"
+                    : "customer-modal-submit"
+                }
               >
                 {!isDeleteModal ? "Simpan" : "Hapus"}
               </Button>
