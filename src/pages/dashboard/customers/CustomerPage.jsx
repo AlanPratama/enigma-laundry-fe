@@ -1,9 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
 import {
   Button,
-  Card,
-  CardBody,
-  CardHeader,
   Pagination,
   Table,
   TableBody,
@@ -13,10 +9,11 @@ import {
   TableRow,
   useDisclosure,
 } from "@nextui-org/react";
-import ModalComponent from "./components/ModalComponent";
-import CustomerApi from "../../../apis/CustomersApi";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import CustomerApi from "../../../apis/CustomersApi";
+import ModalComponent from "./components/ModalComponent";
 
 function CustomerPage() {
   const { items } = useSelector((state) => state.customers);
@@ -136,122 +133,118 @@ function CustomerPage() {
 
   return (
     <>
-      <div className="flex flex-1 justify-center m-8">
-        <Card shadow="">
-          <CardHeader className="flex justify-between mt-2">
-            <h1 className="text-xl font-bold p-2">Daftar Pelanggan</h1>
-            <Button
-              color="primary"
-              onPress={() => {
-                setModaltitle("Tambah Pelanggan");
-                setIsDeleteModal(false);
-                setSelectedCustomer(null);
-                setIsCreate(true);
-                onOpen();
-              }}
-            >
-              <ion-icon name="add-circle" size="small"></ion-icon>
-              <span className="font-semibold">Tambah Pelanggan</span>
-            </Button>
-          </CardHeader>
-          <CardBody>
-            <Table
-              color="primary"
-              selectionMode="single"
-              sortDescriptor={sortDescriptor}
-              onSortChange={handleSortChange}
-              aria-label="customers-table"
-              bottomContent={
-                <div className="flex w-full justify-center">
-                  <Pagination
-                    loop
-                    isCompact
-                    showControls
-                    // showShadow
-                    size="sm"
-                    color="primary"
-                    variant="light"
-                    page={page}
-                    total={pages}
-                    onChange={(page) => setPage(page)}
-                  />
-                </div>
-              }
-            >
-              <TableHeader>
-                {/* <TableColumn allowsSorting key="id">
+      <div className="m-8">
+        <div className="flex justify-between mb-4">
+          <h1 className="text-xl font-bold p-2">Customers</h1>
+          <Button
+            color="primary"
+            onPress={() => {
+              setModaltitle("Tambah Pelanggan");
+              setIsDeleteModal(false);
+              setSelectedCustomer(null);
+              setIsCreate(true);
+              onOpen();
+            }}
+          >
+            <ion-icon name="add-circle" size="small"></ion-icon>
+            <span className="font-semibold">Tambah Pelanggan</span>
+          </Button>
+        </div>
+        <Table
+          color="primary"
+          selectionMode="single"
+          sortDescriptor={sortDescriptor}
+          onSortChange={handleSortChange}
+          aria-label="customers-table"
+          bottomContent={
+            <div className="flex w-full justify-center">
+              <Pagination
+                loop
+                isCompact
+                showControls
+                // showShadow
+                size="sm"
+                color="primary"
+                variant="light"
+                page={page}
+                total={pages}
+                onChange={(page) => setPage(page)}
+              />
+            </div>
+          }
+        >
+          <TableHeader>
+            {/* <TableColumn allowsSorting key="id">
                   Id Pelanggan
                 </TableColumn> */}
-                <TableColumn allowsSorting key="name">
-                  Nama
-                </TableColumn>
-                <TableColumn allowsSorting key="phoneNumber">
-                  Nomor Telpon
-                </TableColumn>
-                <TableColumn allowsSorting key="address">
-                  Alamat
-                </TableColumn>
-                <TableColumn allowsSorting key="createdAt">
-                  Dibuat pada
-                </TableColumn>
-                <TableColumn allowsSorting key="updatedAt">
-                  Diubah pada
-                </TableColumn>
-                <TableColumn>Aksi</TableColumn>
-              </TableHeader>
-              <TableBody emptyContent={"Tidak ada data."}>
-                {sortedItems.map((customer) => {
-                  return (
-                    <TableRow key={customer.id}>
-                      {/* <TableCell>{customer.id}</TableCell> */}
-                      <TableCell>{customer.name}</TableCell>
-                      <TableCell>{customer.phoneNumber}</TableCell>
-                      <TableCell>{customer.address}</TableCell>
-                      <TableCell>{formatDate(customer?.createdAt)}</TableCell>
-                      <TableCell>{formatDate(customer?.updatedAt)}</TableCell>
-                      <TableCell className="flex justify-start items-center gap-2 h-[56px]">
-                        <Button
-                          variant="flat"
-                          color="primary"
-                          size="sm"
-                          onPress={() => {
-                            setSelectedCustomer(customer);
-                            setModaltitle("Edit Pelanggan");
-                            setIsDeleteModal(false);
-                            setIsCreate(false);
-                            onOpen();
-                          }}
-                        >
-                          <ion-icon name="pencil" size="small"></ion-icon>
-                          Edit
-                        </Button>
-                        <Button
-                          variant="flat"
-                          color="danger"
-                          size="sm"
-                          onPress={() => {
-                            setModaltitle("Hapus Pelanggan");
-                            setIsDeleteModal(true);
-                            setSelectedCustomer(customer);
-                            setIsCreate(false);
-                            onOpen();
-                          }}
-                        >
-                          <ion-icon
-                            style={{ color: "red" }}
-                            name="trash"
-                            size="small"
-                          ></ion-icon>
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </CardBody>
-        </Card>
+            <TableColumn allowsSorting key="name">
+              Nama
+            </TableColumn>
+            <TableColumn allowsSorting key="phoneNumber">
+              Nomor Telpon
+            </TableColumn>
+            <TableColumn allowsSorting key="address">
+              Alamat
+            </TableColumn>
+            <TableColumn allowsSorting key="createdAt">
+              Dibuat pada
+            </TableColumn>
+            <TableColumn allowsSorting key="updatedAt">
+              Diubah pada
+            </TableColumn>
+            <TableColumn>Aksi</TableColumn>
+          </TableHeader>
+          <TableBody emptyContent={"Tidak ada data."}>
+            {sortedItems.map((customer) => {
+              return (
+                <TableRow key={customer.id}>
+                  {/* <TableCell>{customer.id}</TableCell> */}
+                  <TableCell>{customer.name}</TableCell>
+                  <TableCell>{customer.phoneNumber}</TableCell>
+                  <TableCell>{customer.address}</TableCell>
+                  <TableCell>{formatDate(customer?.createdAt)}</TableCell>
+                  <TableCell>{formatDate(customer?.updatedAt)}</TableCell>
+                  <TableCell className="flex justify-start items-center gap-2 h-[56px]">
+                    <Button
+                      variant="flat"
+                      color="primary"
+                      size="sm"
+                      onPress={() => {
+                        setSelectedCustomer(customer);
+                        setModaltitle("Edit Pelanggan");
+                        setIsDeleteModal(false);
+                        setIsCreate(false);
+                        onOpen();
+                      }}
+                    >
+                      <ion-icon name="pencil" size="small"></ion-icon>
+                      Edit
+                    </Button>
+                    <Button
+                      variant="flat"
+                      color="danger"
+                      size="sm"
+                      onPress={() => {
+                        setModaltitle("Hapus Pelanggan");
+                        setIsDeleteModal(true);
+                        setSelectedCustomer(customer);
+                        setIsCreate(false);
+                        onOpen();
+                      }}
+                    >
+                      <ion-icon
+                        style={{ color: "red" }}
+                        name="trash"
+                        size="small"
+                      ></ion-icon>
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </div>
       <ModalComponent
         isOpen={isOpen}

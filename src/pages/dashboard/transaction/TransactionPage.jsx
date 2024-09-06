@@ -1,4 +1,3 @@
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import {
   Button,
   Table,
@@ -9,12 +8,12 @@ import {
   TableRow,
   useDisclosure,
 } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AddCircle, EyeOutline } from "react-ionicons";
 import { useSelector } from "react-redux";
+import CustomerApi from "../../../apis/CustomersApi";
+import ProductApi from "../../../apis/ProductsApi";
 import TransactionApi from "../../../apis/TransactionsApi";
-import CustomerApi from "../../../apis/CustomersApi"
-import ProductApi from "../../../apis/ProductsApi"
 import ModalComponent from "./components/ModalComponent";
 
 function BillPage() {
@@ -23,13 +22,13 @@ function BillPage() {
   const [modalTitle, setModalTitle] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isCreate, setIsCreate] = useState(false);
-  const customers = useSelector((state) => state.customers)
-  const products = useSelector((state) => state.products)
+  const customers = useSelector((state) => state.customers);
+  const products = useSelector((state) => state.products);
 
   const getTransactions = async () => {
     await TransactionApi.getTransactions();
-    await CustomerApi.getCustomers()
-    await ProductApi.getProducts()
+    await CustomerApi.getCustomers();
+    await ProductApi.getProducts();
   };
 
   useEffect(() => {
@@ -67,72 +66,65 @@ function BillPage() {
   };
 
   console.log("customers", customers);
-  
 
   return (
-    <div className="flex justify-center items-start pt-6 px-3 h-screen">
-      <Card className="w-full">
-        <CardHeader className="flex justify-between mt-2">
-          <h1 className="font-bold text-start text-xl p-2">
-            Daftar Transaksi
-          </h1>
-          <Button
-            color="primary"
-            onPress={() => {
-              setModalTitle("Tambah Transaksi");
-              setSelectedTransaction(null);
-              setIsCreate(true);
-              onOpen();
-            }}
-          >
-            <AddCircle color="white" /> Tambah
-            Transaksi
-          </Button>
-        </CardHeader>
-        <CardBody>
-          <Table isStriped aria-label="Transaction Table">
-            <TableHeader>
-              <TableColumn>ID Transaksi</TableColumn>
-              <TableColumn>Customer</TableColumn>
-              <TableColumn>User</TableColumn>
-              <TableColumn>No Hp Customer</TableColumn>
-              <TableColumn>Tanggal Transaksi</TableColumn>
-              <TableColumn>Aksi</TableColumn>
-            </TableHeader>
-            <TableBody emptyContent={"Tidak ada transaksi."}>
-              {data &&
-                data.items.map((transaction) => (
-                  <TableRow key={transaction.id}>
-                    <TableCell>{transaction.id}</TableCell>
-                    <TableCell>{transaction.customer.name}</TableCell>
-                    <TableCell>{transaction.user.name}</TableCell>
-                    <TableCell>{transaction.customer.phoneNumber}</TableCell>
-                    <TableCell>
-                      {/* {new Date(transaction.billDate).toLocaleDateString()}{" "}
+    <div className="m-8">
+      <div className="flex justify-between mt-2 mb-4">
+        <h1 className="font-bold text-start text-xl p-2">Bills</h1>
+        <Button
+          color="primary"
+          onPress={() => {
+            setModalTitle("Tambah Transaksi");
+            setSelectedTransaction(null);
+            setIsCreate(true);
+            onOpen();
+          }}
+        >
+          <AddCircle color="white" />{" "}
+          <span className="font-bold">Tambah Transaksi</span>
+        </Button>
+      </div>
+      <Table isStriped aria-label="Transaction Table">
+        <TableHeader>
+          <TableColumn>ID Transaksi</TableColumn>
+          <TableColumn>Customer</TableColumn>
+          <TableColumn>User</TableColumn>
+          <TableColumn>No Hp Customer</TableColumn>
+          <TableColumn>Tanggal Transaksi</TableColumn>
+          <TableColumn>Aksi</TableColumn>
+        </TableHeader>
+        <TableBody emptyContent={"Tidak ada transaksi."}>
+          {data &&
+            data.items.map((transaction) => (
+              <TableRow key={transaction.id}>
+                <TableCell>{transaction.id}</TableCell>
+                <TableCell>{transaction.customer.name}</TableCell>
+                <TableCell>{transaction.user.name}</TableCell>
+                <TableCell>{transaction.customer.phoneNumber}</TableCell>
+                <TableCell>
+                  {/* {new Date(transaction.billDate).toLocaleDateString()}{" "}
                       {new Date(transaction.billDate).toLocaleTimeString("en-GB")} */}
-                      {formatDate(transaction.billDate)}
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        className="mx-1"
-                        variant="flat"
-                        color="primary"
-                        onPress={() => {
-                          setSelectedTransaction(transaction);
-                          setModalTitle("Detail Transaksi");
-                          setIsCreate(false);
-                          onOpen();
-                        }}
-                      >
-                        <EyeOutline color="blue" /> Detail
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </CardBody>
-      </Card>
+                  {formatDate(transaction.billDate)}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    className="mx-1"
+                    variant="flat"
+                    color="primary"
+                    onPress={() => {
+                      setSelectedTransaction(transaction);
+                      setModalTitle("Detail Transaksi");
+                      setIsCreate(false);
+                      onOpen();
+                    }}
+                  >
+                    <EyeOutline color="blue" /> Detail
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
       {/* Modal */}
       <ModalComponent
         isOpen={isOpen}

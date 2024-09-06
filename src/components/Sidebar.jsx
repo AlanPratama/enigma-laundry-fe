@@ -92,9 +92,7 @@ function Sidebar() {
                 variant="light"
                 color="primary"
                 className={`${
-
                   location.pathname == "/customers" && "bg-blue-500 text-white"
-
                 } w-full justify-start`}
                 radius="sm"
                 startContent={<ion-icon name="people-outline"></ion-icon>}
@@ -119,7 +117,7 @@ function Sidebar() {
               </Button>
             </li>
             <div className="absolute bottom-0">
-              <li className="sm:w-40 w-52 mx-auto py-4">
+              <li className="w-44 mx-auto py-4">
                 <Button
                   onClick={() => handleLogout()}
                   variant="light"
