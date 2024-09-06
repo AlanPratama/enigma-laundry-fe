@@ -25,7 +25,7 @@ function Sidebar() {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="sm:hidden p-4 focus:outline-none fixed top-0 left-0 z-50"
+        className="lg:hidden p-4 focus:outline-none fixed top-0 left-0 z-50"
       >
         <ion-icon
           name={isOpen ? "close-outline" : "menu-outline"}
@@ -37,7 +37,7 @@ function Sidebar() {
       <aside
         className={`${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform sm:sticky absolute sm:translate-x-0 top-0 left-0 z-40 w-64 h-screen border-r-2 bg-gray-50`}
+        } transition-transform sticky lg:translate-x-0 lg:ml-0 -ml-64 top-0 left-0 z-40 w-64 min-h-screen border-r-2 bg-gray-50`}
       >
         <div className="h-full overflow-y-auto">
           <button onClick={() => handleNavigate("/")}>
