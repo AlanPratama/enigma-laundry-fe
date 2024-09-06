@@ -112,7 +112,7 @@ function ModalComponent({
                   {transaction.billDetails.map((bill, index) => (
                     <div key={index} className="mb-4">
                       <p className="text-lg font-semibold">Product: <span className="font-normal">{bill.product.name}</span></p>
-                      <p className="text-lg font-semibold">Price: <span className="font-normal">{bill.product.price}</span></p>
+                      <p className="text-lg font-semibold">Price: <span className="font-normal">Rp {bill.product.price.toLocaleString("id-ID")}</span></p>
                       <p className="text-lg font-semibold">Type: <span className="font-normal">{bill.product.type}</span></p>
                       <p className="text-lg font-semibold">Quantity: <span className="font-normal">{bill.qty}</span></p>
                     </div>
