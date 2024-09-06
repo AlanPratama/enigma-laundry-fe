@@ -1,39 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
 .dashboard-container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    color: #333;
-    font-family: Arial, sans-serif;
-  }
-  
-  .dashboard-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #4a90e2;
-    margin-bottom: 20px;
-  }
-  
-  .analytics-container {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .analytics-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .analytics-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .analytics-list li {
-    font-size: 1rem;
-    padding: 5px 0;
-  }
-  
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f7f7f7;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  color: #212519;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-subtitle {
+  font-size: 1.5rem;
+  color: #6d6f72;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.summary-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 22%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.summary-card h3 {
+  color: #212519;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.summary-card p {
+  font-size: 1.5rem;
+  color: #6d6f72;
+}
+
+.orange-gradient {
+  background: linear-gradient(135deg, #ff8946, #ffd4bc);
+}
+
+.blue-gradient {
+  background: linear-gradient(135deg, #192b66, #4f64a6, #6d7db5);
+}
+
+.orange-solid {
+  background-color: #ff6b18;
+  color: white;
+}
+
+.blue-solid {
+  background-color: #233d90;
+  color: white;
+}
+
+.recent-section {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.recent-box {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 45%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recent-box h3 {
+  color: #212519;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.recent-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recent-box li {
+  font-size: 1.2rem;
+  color: #6d6f72;
+  margin-bottom: 10px;
+}
+
+.summary-card:hover {
+  background-color: #233d90;
+  color: white;
+}
