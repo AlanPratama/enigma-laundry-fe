@@ -7,6 +7,7 @@ import axiosInstance from "./axiosInstance";
 class AuthApi {
 	static async login(username, password) {
 		try {
+			store.dispatch(setError(null));
 			store.dispatch(setIsLoading(true));
 			const { data } = await axiosInstance.post("auth/login", {
 				username,
@@ -17,8 +18,8 @@ class AuthApi {
 
 			store.dispatch(login(jwtDecode(data.data.token))); // save user detail to redux auth state
 		} catch (error) {
-			store.dispatch(setError(error));
-			console.error(error);
+			store.dispatch(setError(error.message));
+			throw new Error("CustomerApi getCustomers", error.message);
 		} finally {
 			store.dispatch(setIsLoading(false));
 		}
