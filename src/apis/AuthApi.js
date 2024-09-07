@@ -32,8 +32,6 @@ class AuthApi {
 
 	static async register(userData) {
 		try {
-			console.log({ ...userData, role: "employee" });
-
 			store.dispatch(setError(null));
 			store.dispatch(setIsLoading(true));
 			await axiosInstance.post("auth/register", { ...userData, role: "employee" });

@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-import AuthApi from "../apis/AuthApi";
 import { toast } from "react-toastify";
+import AuthApi from "../apis/AuthApi";
 
 const RegisterPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-	const { isAuthenticated } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 	const {
 		register,
@@ -18,12 +16,6 @@ const RegisterPage = () => {
 		watch,
 	} = useForm();
 
-	useEffect(() => {
-		if (isAuthenticated) {
-			navigate("/", { replace: true, state: { from: "/register" } });
-		}
-	}, []);
-
 	const onSubmit = async (data) => {
 		await toast.promise(AuthApi.register(data), {
 			pending: "Register...",
@@ -31,7 +23,7 @@ const RegisterPage = () => {
 			error: "Register failed 🤯",
 		});
 		toast.info("Login to your account");
-		navigate("/");
+		navigate("/login", { replace: true, state: { from: "/register" } });
 	};
 
 	return (
