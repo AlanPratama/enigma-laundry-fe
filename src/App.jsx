@@ -1,6 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { Spinner } from "@nextui-org/react";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -22,6 +23,7 @@ export const App = () => {
 		}
 	};
 	const [loading, setLoading] = useState(true);
+	const { isAuthenticated } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		setUser();
@@ -31,16 +33,24 @@ export const App = () => {
 	const router = createBrowserRouter([
 		{
 			path: "login",
-			element: <LoginPage />,
+			element: (
+				<ProtectedRoute condition={!isAuthenticated} target='/'>
+					<LoginPage />
+				</ProtectedRoute>
+			),
 		},
 		{
 			path: "register",
-			element: <RegisterPage />,
+			element: (
+				<ProtectedRoute condition={!isAuthenticated} target='/'>
+					<RegisterPage />
+				</ProtectedRoute>
+			),
 		},
 		{
 			path: "/",
 			element: (
-				<ProtectedRoute>
+				<ProtectedRoute condition={isAuthenticated} target={"/login"}>
 					<Outlet />
 				</ProtectedRoute>
 			),

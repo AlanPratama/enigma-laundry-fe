@@ -1,26 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import bg from "/bg.webp";
 
-import AuthApi from "../apis/AuthApi";
 import { toast } from "react-toastify";
+import AuthApi from "../apis/AuthApi";
 
 const LoginPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const { isAuthenticated } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	useEffect(() => {
-		if (isAuthenticated) {
-			navigate("/", { replace: true, state: { from: "/login" } });
-		}
-	}, [isAuthenticated, navigate]);
 
 	const onSubmit = async (data) => {
 		// await toast.promise(AuthApi.login(data.username, data.password), {
