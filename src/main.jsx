@@ -12,7 +12,7 @@ createRoot(document.getElementById("root")).render(
 	<NextUIProvider>
 		<Provider store={store}>
 			<App />
-			<ToastContainer />
+			<ToastContainer position='top-center' closeOnClick pauseOnHover draggable />
 		</Provider>
 	</NextUIProvider>
 );
