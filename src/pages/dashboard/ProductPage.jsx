@@ -51,7 +51,7 @@ const ProductPage = () => {
   const handleUpdateModal = (item) => {
     setProductChange(item);
     setModalType("update");
-    console.log(item);
+    // console.log(item);
 
     onOpen();
   };
@@ -98,8 +98,10 @@ const ProductPage = () => {
         setValue("type", "");
         console.log(productData);
 
-        if (modalType === "create") await ProductApi.createProduct(productData);
-        else await ProductApi.updateProduct(productData);
+        if (modalType === "create") {
+          await ProductApi.createProduct(productData);
+          getProduct();
+        } else await ProductApi.updateProduct(productData);
       }
       cancelRef.current.click();
     } catch (error) {
@@ -107,29 +109,34 @@ const ProductPage = () => {
     }
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
+  // const formatDate = (dateString) => {
+  //   const date = new Date(dateString);
 
-    const dayName = new Intl.DateTimeFormat("id-ID", {
-      weekday: "long",
-    }).format(date);
-    const day = date.getDate();
-    const monthName = new Intl.DateTimeFormat("id-ID", {
-      month: "short",
-    }).format(date);
-    const year = date.getFullYear();
-    const time = date.toLocaleTimeString("id-ID", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+  //   const dayName = new Intl.DateTimeFormat("id-ID", {
+  //     weekday: "long",
+  //   }).format(date);
+  //   const day = date.getDate();
+  //   const monthName = new Intl.DateTimeFormat("id-ID", {
+  //     month: "short",
+  //   }).format(date);
+  //   const year = date.getFullYear();
+  //   const time = date.toLocaleTimeString("id-ID", {
+  //     hour: "2-digit",
+  //     minute: "2-digit",
+  //   });
 
-    return `${dayName}, ${day} ${monthName} ${year} (${time})`;
-  };
+  //   return `${dayName}, ${day} ${monthName} ${year} (${time})`;
+  // };
 
   return (
     <div className="m-8">
       <div className="flex justify-between mt-2 mb-4">
-        <h1 className="font-bold text-start text-xl p-2" data-testid="product-title">Products</h1>
+        <h1
+          className="font-bold text-start text-xl p-2"
+          data-testid="product-title"
+        >
+          Products
+        </h1>
         <div className="flex justify-center items-center gap-4">
           {/* <div className="relative w-auto">
           <Search
@@ -166,13 +173,13 @@ const ProductPage = () => {
         }}
       >
         <TableHeader>
-          <TableColumn key="id">Id Produk</TableColumn>
-          <TableColumn key="name">Nama</TableColumn>
-          <TableColumn key="price">Harga</TableColumn>
-          <TableColumn key="type">Tipe</TableColumn>
-          <TableColumn key="type">Dibuat Pada</TableColumn>
-          <TableColumn key="type">Diubah Pada</TableColumn>
-          <TableColumn>Aksi</TableColumn>
+          <TableColumn key="id">ID</TableColumn>
+          <TableColumn key="name">Name</TableColumn>
+          <TableColumn key="price">Price</TableColumn>
+          <TableColumn key="type">Type</TableColumn>
+          {/* <TableColumn key="type">Dibuat Pada</TableColumn>
+          <TableColumn key="type">Diubah Pada</TableColumn> */}
+          <TableColumn>Action</TableColumn>
         </TableHeader>
         <TableBody
           items={items}
@@ -187,8 +194,8 @@ const ProductPage = () => {
                 <TableCell>{item.name}</TableCell>
                 <TableCell>Rp {item.price.toLocaleString("id-ID")}</TableCell>
                 <TableCell>{item.type}</TableCell>
-                <TableCell>{formatDate(item.createdAt)}</TableCell>
-                <TableCell>{formatDate(item.updatedAt)}</TableCell>
+                {/* <TableCell>{formatDate(item.createdAt)}</TableCell>
+                <TableCell>{formatDate(item.updatedAt)}</TableCell> */}
                 {/* Kolom Action */}
                 <TableCell className="flex justify-start items-center gap-2">
                   <Button
@@ -201,8 +208,10 @@ const ProductPage = () => {
                     <PencilOutline color="blue" height="15px" /> Edit
                   </Button>
                   <Button
-                  className="z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover"
-                    data-testid={`delete-product-button-${item.id.split("-")[0]}`}  
+                    className="z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover"
+                    data-testid={`delete-product-button-${
+                      item.id.split("-")[0]
+                    }`}
                     variant="flat"
                     color="danger"
                     size="sm"
@@ -227,8 +236,12 @@ const ProductPage = () => {
       </Table>
       <div>
         <Modal
-        className="swal2-popup"
-          data-testid={modalType === "delete" ? "delete-product-modal" : "add-product-modal"}  
+          className="swal2-popup"
+          data-testid={
+            modalType === "delete"
+              ? "delete-product-modal"
+              : "add-product-modal"
+          }
           isOpen={isOpen}
           onOpenChange={onOpenChange}
           isDismissable={false}
@@ -270,7 +283,10 @@ const ProductPage = () => {
                           className="w-full px-3 py-2 rounded-r-xl"
                         />
                       </div>
-                      <span data-testid={"name-error"} className="text-red-500 text-sm">
+                      <span
+                        data-testid={"name-error"}
+                        className="text-red-500 text-sm"
+                      >
                         {errors.name && "Nama harus diisi"}
                       </span>
                       <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
@@ -279,7 +295,7 @@ const ProductPage = () => {
                           // className="absolute top-2.5 left-3"
                         />
                         <input
-                        id="price"
+                          id="price"
                           data-testid="product-price-input"
                           type="number"
                           defaultValue={productChange.price}
@@ -289,7 +305,10 @@ const ProductPage = () => {
                           className="w-full px-3 py-2 rounded-r-xl"
                         />
                       </div>
-                      <span data-testid={"price-error"} className="text-red-500 text-sm">
+                      <span
+                        data-testid={"price-error"}
+                        className="text-red-500 text-sm"
+                      >
                         {errors.price && "Harga harus diisi"}
                       </span>
                       <div className="my-0.5 flex justify-start items-center gap-2 rounded-xl shadow border-t border-gray-100 pl-2">
@@ -299,7 +318,7 @@ const ProductPage = () => {
                         />
                         <input
                           id="type"
-                          data-testid="product-type-input"  
+                          data-testid="product-type-input"
                           defaultValue={productChange.type}
                           {...register("type", { required: true })}
                           type="text"
@@ -307,7 +326,10 @@ const ProductPage = () => {
                           className="w-full px-3 py-2 rounded-r-xl"
                         />
                       </div>
-                      <span data-testid={"type-error"} className="text-red-500 text-sm">
+                      <span
+                        data-testid={"type-error"}
+                        className="text-red-500 text-sm"
+                      >
                         {errors.type && "Tipe harus diisi"}
                       </span>
                     </>
@@ -315,7 +337,11 @@ const ProductPage = () => {
                 </ModalBody>
                 <ModalFooter>
                   <Button
-                    data-testid={modalType === "delete" ? "close-delete-product-modal" : "close-add-product-modal"}
+                    data-testid={
+                      modalType === "delete"
+                        ? "close-delete-product-modal"
+                        : "close-add-product-modal"
+                    }
                     className="swal2-cancel"
                     color="danger"
                     ref={cancelRef}
@@ -324,7 +350,16 @@ const ProductPage = () => {
                   >
                     Close
                   </Button>
-                  <Button className="z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover.z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover.z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover swal2-confirm" data-testid={modalType === "delete" ? "confirm-delete-button" : "submit-add-product"} color="primary" type="submit">
+                  <Button
+                    className="z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover.z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover.z-0.group.relative.inline-flex.items-center.justify-center.box-border.appearance-none.select-none.whitespace-nowrap.font-normal.subpixel-antialiased.overflow-hidden.tap-highlight-transparent.data-[pressed=true]:scale-[0.97].outline-none.data-[focus-visible=true]:z-10.data-[focus-visible=true]:outline-2.data-[focus-visible=true]:outline-focus.data-[focus-visible=true]:outline-offset-2.px-3.min-w-16.h-8.text-tiny.gap-2.rounded-small.[&>svg]:max-w-[theme(spacing.8)].transition-transform-colors-opacity.motion-reduce:transition-none.bg-danger/20.text-danger.dark:text-danger-500.data-[hover=true]:opacity-hover swal2-confirm"
+                    data-testid={
+                      modalType === "delete"
+                        ? "confirm-delete-button"
+                        : "submit-add-product"
+                    }
+                    color="primary"
+                    type="submit"
+                  >
                     Submit
                   </Button>
                 </ModalFooter>
@@ -333,7 +368,6 @@ const ProductPage = () => {
           </ModalContent>
         </Modal>
       </div>
-
     </div>
   );
 };
