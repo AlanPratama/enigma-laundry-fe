@@ -25,13 +25,12 @@ const LoginPage = () => {
 		try {
 			await AuthApi.login(data.username, data.password);
 			toast.success("Login Berhasil!");
+			navigate("/");
 		} catch (error) {
 			console.log(error.message);
 
 			toast.error("Login Failed!");
 		}
-
-		navigate("/");
 	};
 
 	return (
