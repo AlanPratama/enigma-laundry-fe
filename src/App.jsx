@@ -14,6 +14,7 @@ import CustomerPage from "./pages/dashboard/customers/CustomerPage";
 import BillPage from "./pages/dashboard/transaction/TransactionPage";
 import { login } from "./redux/auth/authSlice";
 import store from "./redux/store";
+import UserPage from "./pages/dashboard/users/UsersPage";
 
 export const App = () => {
 	const setUser = () => {
@@ -23,7 +24,7 @@ export const App = () => {
 		}
 	};
 	const [loading, setLoading] = useState(true);
-	const { isAuthenticated } = useSelector((state) => state.auth);
+	const { isAuthenticated, user } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		setUser();
@@ -74,6 +75,14 @@ export const App = () => {
 						{
 							path: "bills",
 							element: <BillPage />,
+						},
+						{
+							path: "users",
+							element: (
+								<ProtectedRoute condition={user.role == "admin"} target={"/"}>
+									<UserPage />
+								</ProtectedRoute>
+							),
 						},
 					],
 				},
