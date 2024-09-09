@@ -27,6 +27,7 @@ import {
 } from "react-ionicons";
 import { useSelector } from "react-redux";
 import ProductApi from "../../apis/ProductsApi";
+import { toast } from "react-toastify";
 
 const ProductPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,11 +42,11 @@ const ProductPage = () => {
   };
 
   const handleCreateModal = () => {
-    setModalType("create");
-    setValue("name", "");
-    setValue("price", "");
-    setValue("type", "");
-    onOpen();
+      setModalType("create");
+      setValue("name", "");
+      setValue("price", "");
+      setValue("type", "");
+      onOpen();
   };
 
   const handleUpdateModal = (item) => {
@@ -86,6 +87,13 @@ const ProductPage = () => {
     try {
       if (modalType === "delete") {
         await ProductApi.deleteProduct(productChange.id);
+        toast.success("Product Deleted Successfully", {
+          position: "top-center",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       } else {
         const productData = {
           id: productChange.id,
@@ -101,11 +109,34 @@ const ProductPage = () => {
         if (modalType === "create") {
           await ProductApi.createProduct(productData);
           getProduct();
-        } else await ProductApi.updateProduct(productData);
+          toast.success("Product Created Successfully", {
+            position: "top-center",
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        } else {
+          await ProductApi.updateProduct(productData);
+          toast.success("Product Updated Successfully", {
+            position: "top-center",
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        }
       }
       cancelRef.current.click();
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong", {
+        position: "top-center",
+        autoClose: 2000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
